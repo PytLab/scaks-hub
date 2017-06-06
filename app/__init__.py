@@ -17,6 +17,10 @@ def create_app(config_name='default'):
     app.config.from_object(config[config_name])
     config[config_name].init_app()
 
+    # Register blueprint.
+    from .main import main as main_blueprint
+    app.register_blueprint(main_blueprint)
+
     moment.init_app()
 
     return app
