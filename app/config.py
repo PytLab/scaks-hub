@@ -37,6 +37,7 @@ class TestConfig(Config):
 # All configure 
 config = {
     'development': DevConfig,
-    'testing': TestConfig
+    'testing': TestConfig,
+    'default': DevConfig,
 }
 
