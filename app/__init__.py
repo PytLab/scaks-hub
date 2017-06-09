@@ -10,18 +10,18 @@ from config import config
 moment = Moment()
 
 # App factory function.
-def create_app(config_name='default'):
+def create_app(config_name):
     ''' Create an app from a specific configure.
     '''
     app = Flask(__name__)
     app.config.from_object(config[config_name])
-    config[config_name].init_app()
+    config[config_name].init_app(app)
 
     # Register blueprint.
     from .main import main as main_blueprint
     app.register_blueprint(main_blueprint)
 
-    moment.init_app()
+    moment.init_app(app)
 
     return app
 
