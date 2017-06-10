@@ -1,0 +1,15 @@
+/* Custom style definition for kynetix-webapp*/
+
+.with-margin-top {
+    margin-top: 10px;
+}
+
+.with-margin-bottom {
+    margin-bottom: 10px;
+}
+
+.with-margin {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
