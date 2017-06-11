@@ -6,7 +6,9 @@
 import os
 
 from flask import render_template, url_for, redirect, abort
+
 from . import main
+from .errors import PathError
 
 @main.route('/')
 def index():
@@ -19,7 +21,7 @@ def filetree(path):
     if path:
         full_path = '{}/{}'.format(base_path, path)
         if not os.path.exists(full_path):
-            abort(404)
+            raise PathError('No such file or directory: {}'.format(full_path))
         path = [subdir for subdir in path.split('/') if subdir]
     return render_template('filetree.html', path=path)
 

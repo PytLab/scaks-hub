@@ -10,9 +10,21 @@
     <link href="{{ url_for('static', filename='img/icon.ico') }}" rel="icon">
 </head>
 <body>
-	{% block navbar %}{% endblock %}
-	{% block content %}{% endblock %}
+	{% block navbar %}
+    {% include "navbar.html" %}
+    {% endblock %}
+
+    <div class="container">
+        <div class="col-md-1"></div>
+        <div class="col-md-10">
+        {% block content %}
+        {% endblock %}
+        </div>
+        <div class="col-md-1"></div>
+    </div>
+
     <script src="{{ url_for('static', filename='js/jquery-3.2.1.js') }}"></script>
     <script src="{{ url_for('static', filename='js/bootstrap.js') }}"></script>
 </body>
 </html>
+
