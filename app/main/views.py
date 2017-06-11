@@ -3,10 +3,17 @@
 
 # View functions for microkinetics model building.
 
-from flask import render_template, url_for
+from flask import render_template, url_for, redirect
 from . import main
 
-@main.route('/', methods=['GET', 'POST'])
+@main.route('/')
 def index():
-    return render_template('filesystem.html')
+    return redirect(url_for('main.filetree'))
+
+@main.route('/tree/', defaults={'path': ''})
+@main.route('/tree/<path:path>', methods=['GET', 'POST'])
+def filetree(path):
+    if path:
+        path = path.split('/')
+    return render_template('filesystem.html', path=path)
 

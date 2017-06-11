@@ -8,8 +8,13 @@
     margin-bottom: 10px;
 }
 
-.with-margin {
+.with-vertical-margins {
     margin-top: 10px;
     margin-bottom: 10px;
+}
+
+.embeded-charactors {
+    font-size: 12px;
+    opacity: 0.5;
 }
 
