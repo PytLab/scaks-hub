@@ -1,14 +1,8 @@
 <!-- Bread crumb navigator for file location -->
-<div class="row with-vertical-margins embeded-charactors">
-    Select items to perform actions on them
-</div>
-
-<div class="row">
-    <ul class="breadcrumb">
-        <li><span class="fa fa-user">~</span></li>
-        {% for subdir in path %}
-        <li>{{ subdir }}</li>
-        {% endfor %}
-    </ul>
-</div>
+<ul class="breadcrumb">
+    <li><span class="fa fa-user">~</span></li>
+    {% for subdir in path %}
+    <li>{{ subdir }}</li>
+    {% endfor %}
+</ul>
 
