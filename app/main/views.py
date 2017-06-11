@@ -14,6 +14,6 @@ def index():
 @main.route('/tree/<path:path>', methods=['GET', 'POST'])
 def filetree(path):
     if path:
-        path = path.split('/')
-    return render_template('filesystem.html', path=path)
+        path = [subdir for subdir in path.split('/') if subdir]
+    return render_template('filetree.html', path=path)
 
