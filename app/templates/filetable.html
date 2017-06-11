@@ -4,15 +4,16 @@
         {% include "filepath.html" %}
         <table class="table table-hover">
             <tbody>
-                <tr>
-                    <td>asdf</td>
-                </tr>
-                <tr>
-                    <td>asdf</td>
-                </tr>
-                <tr>
-                    <td>asdf</td>
-                </tr>
+            {% if dirs %}
+                {% for dir in dirs %}
+                <tr><td>{{ dir }}</td></tr>
+                {% endfor %}
+            {% endif %}
+            {% if files %}
+                {% for file in files %}
+                <tr><td>{{ file }}</td></tr>
+                {% endfor %}
+            {% endif %}
             </tbody>
         </table>
     </div>
