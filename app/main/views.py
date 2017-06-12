@@ -17,6 +17,8 @@ def index():
 @main.route('/tree/', defaults={'path': ''})
 @main.route('/tree/<path:path>', methods=['GET', 'POST'])
 def filetree(path):
+    locs = {}
+
     base_path = os.getcwd()
     full_path = '{}/{}'.format(base_path, path)
 
@@ -29,13 +31,25 @@ def filetree(path):
         # Directory backward.
         prev_path = '/'.join(path[: -1])
 
+        # Links for each subdir in path information.
+        path_links = []
+        base_link = url_for('main.filetree')[:-1]
+        accumulate_link = base_link
+        for subdir in path:
+            accumulate_link += ('/' + subdir)
+            path_links.append(accumulate_link)
+        links_paths = zip(path_links, path)
+    else:
+        links_paths = []
+
+    locs['links_paths'] = links_paths
+
     # File list.
     dirs_files  = os.listdir(full_path)
     dirs = [i for i in dirs_files if os.path.isdir('{}/{}'.format(full_path, i))]
     files = [i for i in dirs_files if os.path.isfile('{}/{}'.format(full_path, i))]
+    locs['dirs'], locs['files'] = sorted(dirs), sorted(files)
 
-    return render_template('filetree.html',
-                           path=path,
-                           dirs=sorted(dirs),
-                           files=sorted(files))
+
+    return render_template('filetree.html', **locs)
 

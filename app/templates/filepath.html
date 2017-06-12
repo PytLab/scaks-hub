@@ -1,8 +1,8 @@
 <!-- Bread crumb navigator for file location -->
 <ul class="breadcrumb">
     <li><span class="fa fa-user">~</span></li>
-    {% for subdir in path %}
-    <li>{{ subdir }}</li>
+    {% for link, subdir in links_paths %}
+    <li><a href="{{ link }}">{{ subdir }}</a></li>
     {% endfor %}
 </ul>
 
