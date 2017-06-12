@@ -5,8 +5,9 @@
 
 import os
 
-from flask import render_template, url_for, redirect, abort
 from flask import request
+from flask import render_template, url_for
+from flask import make_response, send_file, redirect, abort
 
 from . import main
 from .errors import PathError
@@ -45,15 +46,21 @@ def filetree(path):
 
     locs['links_paths'] = links_paths
 
-    # File list.
-    dirs_files  = os.listdir(full_path)
-    dirs = [i for i in dirs_files if os.path.isdir('{}/{}'.format(full_path, i))]
-    files = [i for i in dirs_files if os.path.isfile('{}/{}'.format(full_path, i))]
+    if os.path.isdir(full_path):
+        # File list.
+        dirs_files  = os.listdir(full_path)
+        dirs = [i for i in dirs_files if os.path.isdir('{}/{}'.format(full_path, i))]
+        files = [i for i in dirs_files if os.path.isfile('{}/{}'.format(full_path, i))]
 
-    url = request.url.strip('/')
-    links_dirs = [('{}/{}'.format(url, dir), dir) for dir in sorted(dirs)]
-    links_files = [('{}/{}'.format(url, file), file) for file in sorted(files)]
-    locs['links_dirs'], locs['links_files'] = links_dirs, links_files
+        url = request.url.strip('/')
+        links_dirs = [('{}/{}'.format(url, dir), dir) for dir in sorted(dirs)]
+        links_files = [('{}/{}'.format(url, file), file) for file in sorted(files)]
+        locs['links_dirs'], locs['links_files'] = links_dirs, links_files
 
-    return render_template('filetree.html', **locs)
+        return render_template('filetree.html', **locs)
+    else:
+        response = make_response(send_file(full_path))
+        filename = full_path.split('/')[-1]
+        response.headers["Content-Disposition"] = "attachment; filename={};".format(filename)
+        return response
 
