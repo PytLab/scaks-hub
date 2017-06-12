@@ -15,7 +15,10 @@
                 {% for link, file in links_files %}
                     {% if file.split('.')[-1] in ['py', 'js', 'cpp', 'c', 'css', 'html']%}
                     <tr>
-                        <td><i class="fa fa-file-code-o"></i><a href="{{ link }}">{{ file }}</a></td>
+                        <td>
+                            <i class="fa fa-file-code-o"></i><a href="{{ link }}">{{ file }}</a>
+                            <span class="embeded-charactors pull-right"> mtime </span>
+                        </td>
                     </tr>
                     {% elif file.split('.')[-1] in ['txt', 'conf'] %}
                     <tr>
