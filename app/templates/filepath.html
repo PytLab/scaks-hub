@@ -1,6 +1,6 @@
 <!-- Bread crumb navigator for file location -->
 <ul class="breadcrumb">
-    <li><span class="fa fa-user">~</span></li>
+    <li><i class="fa fa-folder" aria-hidden="true"></i></li>
     {% for link, subdir in links_paths %}
     <li><a href="{{ link }}">{{ subdir }}</a></li>
     {% endfor %}
