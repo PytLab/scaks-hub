@@ -6,6 +6,7 @@
 import os
 
 from flask import render_template, url_for, redirect, abort
+from flask import request
 
 from . import main
 from .errors import PathError
@@ -48,8 +49,11 @@ def filetree(path):
     dirs_files  = os.listdir(full_path)
     dirs = [i for i in dirs_files if os.path.isdir('{}/{}'.format(full_path, i))]
     files = [i for i in dirs_files if os.path.isfile('{}/{}'.format(full_path, i))]
-    locs['dirs'], locs['files'] = sorted(dirs), sorted(files)
 
+    url = request.url.strip('/')
+    links_dirs = [('{}/{}'.format(url, dir), dir) for dir in sorted(dirs)]
+    links_files = [('{}/{}'.format(url, file), file) for file in sorted(files)]
+    locs['links_dirs'], locs['links_files'] = links_dirs, links_files
 
     return render_template('filetree.html', **locs)
 

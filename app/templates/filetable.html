@@ -4,21 +4,28 @@
         {% include "filepath.html" %}
         <table class="table table-hover filetree">
             <tbody>
-            {% if dirs %}
-                {% for dir in dirs %}
-                <tr><td><i class="fa fa-folder-o"></i>{{ dir }}</td></tr>
+            {% if links_dirs %}
+                {% for link, dir in links_dirs %}
+                <tr>
+                    <td><i class="fa fa-folder-o"></i><a href="{{ link }}">{{ dir }}</a></td>
+                </tr>
                 {% endfor %}
             {% endif %}
-            {% if files %}
-                {% for file in files %}
+            {% if links_files %}
+                {% for link, file in links_files %}
                     {% if file.split('.')[-1] in ['py', 'js', 'cpp', 'c', 'css', 'html']%}
-                    <tr><td><i class="fa fa-file-code-o"></i>{{ file }}</td></tr>
+                    <tr>
+                        <td><i class="fa fa-file-code-o"></i><a href="{{ link }}">{{ file }}</a></td>
+                    </tr>
                     {% elif file.split('.')[-1] in ['txt', 'conf'] %}
-                    <tr><td><i class="fa fa-file-text-o"></i>{{ file }}</td></tr>
+                    <tr>
+                        <td><i class="fa fa-file-text-o"></i><a href="{{ link }}">{{ file }}</a></td>
+                    </tr>
                     {% elif file.split('.')[-1] in ['zip', 'rar', 'tar', 'tgz', 'gz'] %}
-                    <tr><td><i class="fa fa-file-zip-o"></i>{{ file }}</td></tr>
+                    <tr>
+                        <td><i class="fa fa-file-zip-o"></i><a href="{{ link }}">{{ file }}</a></td></tr>
                     {% else %}
-                    <tr><td><i class="fa fa-file-o"></i>{{ file }}</td></tr>
+                    <tr><td><i class="fa fa-file-o"></i><a href="{{ link }}">{{ file }}</a></td></tr>
                     {% endif %}
                 {% endfor %}
             {% endif %}
