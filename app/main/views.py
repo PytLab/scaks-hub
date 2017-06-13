@@ -82,6 +82,12 @@ def filetree(path):
         locs['text_suffixes'] = ['txt', 'conf']
         locs['zip_suffixes'] = ['zip', 'rar', 'tar', 'tgz', '7z', 'gz']
 
+        # Previous link.
+        if path:
+            locs['prev_link'] = '/'.join(url.split('/')[: -1])
+        else:
+            locs['prev_link'] = None
+
         return render_template('filetree.html', **locs)
     else:
         response = make_response(send_file(full_path))
