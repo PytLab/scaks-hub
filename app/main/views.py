@@ -14,6 +14,11 @@ from flask import make_response, send_file, redirect, abort
 from . import main
 from .errors import PathError
 
+CODE_SUFFIXES = ['py', 'c', 'cpp', 'html', 'css', 'js', 'h']
+TEXT_SUFFIXES = ['txt', 'conf']
+ZIP_SUFFIXES = ['zip', 'rar', 'tar', 'tgz', '7z', 'gz']
+FILE_SUFFIXES = CODE_SUFFIXES + TEXT_SUFFIXES + ZIP_SUFFIXES
+
 @main.route('/')
 def index():
     return redirect(url_for('main.filetree'))
@@ -78,9 +83,9 @@ def filetree(path):
         locs['file_items'], locs['dir_items'] = file_items, dir_items
 
         # File types.
-        locs['code_suffixes'] = ['py', 'c', 'cpp', 'html', 'css', 'js', 'h']
-        locs['text_suffixes'] = ['txt', 'conf']
-        locs['zip_suffixes'] = ['zip', 'rar', 'tar', 'tgz', '7z', 'gz']
+        locs['code_suffixes'] = CODE_SUFFIXES
+        locs['text_suffixes'] = TEXT_SUFFIXES
+        locs['zip_suffixes'] = ZIP_SUFFIXES
 
         # Previous link.
         if path:
@@ -89,6 +94,11 @@ def filetree(path):
             locs['prev_link'] = None
 
         return render_template('file_tree.html', **locs)
+    elif full_path.split('.')[-1] in FILE_SUFFIXES:
+        with open(full_path, 'r') as f:
+            file_content = f.read()
+        locs['file_content'] = file_content
+        return render_template('file_content.html', **locs)
     else:
         response = make_response(send_file(full_path))
         filename = full_path.split('/')[-1]

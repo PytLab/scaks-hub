@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block content %}
+{% include "navtabs.html" %}
+{% include "file_path.html" %}
+
+<!-- File content -->
+<div class="row">
+    <pre><code data-language="python">{{ file_content }}</code></pre>
+</div>
+{% endblock %}
+
