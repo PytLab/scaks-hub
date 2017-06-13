@@ -4,31 +4,56 @@
         {% include "filepath.html" %}
         <table class="table table-hover filetree">
             <tbody>
-            {% if links_dirs %}
-                {% for link, dir in links_dirs %}
+            {% if dir_items %}
+                {% for dir_item in dir_items %}
                 <tr>
-                    <td><i class="fa fa-folder-o"></i><a href="{{ link }}">{{ dir }}</a></td>
+                    <td>
+                        <i class="fa fa-folder-o"></i><a href="{{ dir_item.link }}">{{ dir_item.name }}</a>
+                        <span class="embeded-charactors pull-right">
+                        {{ moment(dir_item.mtime).fromNow(refresh=True) }}
+                        </span>
+                    </td>
                 </tr>
                 {% endfor %}
             {% endif %}
-            {% if links_files %}
-                {% for link, file in links_files %}
-                    {% if file.split('.')[-1] in ['py', 'js', 'cpp', 'c', 'css', 'html']%}
-                    <tr>
-                        <td>
-                            <i class="fa fa-file-code-o"></i><a href="{{ link }}">{{ file }}</a>
-                            <span class="embeded-charactors pull-right"> mtime </span>
-                        </td>
-                    </tr>
-                    {% elif file.split('.')[-1] in ['txt', 'conf'] %}
-                    <tr>
-                        <td><i class="fa fa-file-text-o"></i><a href="{{ link }}">{{ file }}</a></td>
-                    </tr>
-                    {% elif file.split('.')[-1] in ['zip', 'rar', 'tar', 'tgz', 'gz'] %}
-                    <tr>
-                        <td><i class="fa fa-file-zip-o"></i><a href="{{ link }}">{{ file }}</a></td></tr>
-                    {% else %}
-                    <tr><td><i class="fa fa-file-o"></i><a href="{{ link }}">{{ file }}</a></td></tr>
+            {% if file_items %}
+                {% for file_item in file_items %}
+                    {% if file_item.name.split('.')[-1] in code_suffixes %}
+                <tr>
+                    <td>
+                        <i class="fa fa-file-code-o"></i><a href="{{ file_item.link }}">{{ file_item.name }}</a>
+                        <span class="embeded-charactors pull-right">
+                        {{ moment(file_item.mtime).fromNow(refresh=True) }}
+                        </span>
+                    </td>
+                </tr>
+                {% elif file_item.name.split('.')[-1] in text_suffixes %}
+                <tr>
+                    <td>
+                        <i class="fa fa-file-text-o"></i><a href="{{ file_item.link }}">{{ file_item.name }}</a>
+                        <span class="embeded-charactors pull-right">
+                        {{ moment(file_item.mtime).fromNow(refresh=True) }}
+                        </span>
+                    </td>
+                </tr>
+                {% elif file_item.name.split('.')[-1] in zip_suffixes %}
+                <tr>
+                    <td>
+                        <i class="fa fa-file-zip-o"></i><a href="{{ file_item.link }}">{{ file_item.name }}</a>
+                        <span class="embeded-charactors pull-right">
+                        {{ moment(file_item.mtime).fromNow(refresh=True) }}
+                        </span>
+                    </td>
+                </tr>
+                {% else %}
+                <tr>
+                    <td>
+                        <i class="fa fa-file-o"></i><a href="{{ file_item.link }}">{{ file_item.name }}</a>
+                        <span class="embeded-charactors pull-right">
+                        {{ moment(file_item.mtime).fromNow(refresh=True) }}
+                        </span>
+                    </td>
+                </tr>
                     {% endif %}
                 {% endfor %}
             {% endif %}

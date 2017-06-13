@@ -4,6 +4,8 @@
 # View functions for microkinetics model building.
 
 import os
+from collections import namedtuple
+from datetime import datetime
 
 from flask import request
 from flask import render_template, url_for
@@ -53,9 +55,32 @@ def filetree(path):
         files = [i for i in dirs_files if os.path.isfile('{}/{}'.format(full_path, i))]
 
         url = request.url.strip('/')
-        links_dirs = [('{}/{}'.format(url, dir), dir) for dir in sorted(dirs)]
-        links_files = [('{}/{}'.format(url, file), file) for file in sorted(files)]
-        locs['links_dirs'], locs['links_files'] = links_dirs, links_files
+
+        # Store information for each item in file table.
+        FileItem = namedtuple('FileItem', ['name', 'link', 'mtime'])
+
+        dir_items = []
+        for dir in sorted(dirs):
+            link = '{}/{}'.format(url, dir)
+            timestamp = os.path.getmtime('{}/{}'.format(full_path, dir))
+            mtime = datetime.fromtimestamp(timestamp)
+            dir_item = FileItem._make([dir, link, mtime])
+            dir_items.append(dir_item)
+
+        file_items = []
+        for file in sorted(files):
+            link = '{}/{}'.format(url, file)
+            timestamp = os.path.getmtime('{}/{}'.format(full_path, file))
+            mtime = datetime.fromtimestamp(timestamp)
+            file_item = FileItem._make([file, link, mtime])
+            file_items.append(file_item)
+
+        locs['file_items'], locs['dir_items'] = file_items, dir_items
+
+        # File types.
+        locs['code_suffixes'] = ['py', 'c', 'cpp', 'html', 'css', 'js', 'h']
+        locs['text_suffixes'] = ['txt', 'conf']
+        locs['zip_suffixes'] = ['zip', 'rar', 'tar', 'tgz', '7z', 'gz']
 
         return render_template('filetree.html', **locs)
     else:

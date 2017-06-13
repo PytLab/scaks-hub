@@ -24,8 +24,12 @@
         <div class="col-md-1"></div>
     </div>
 
+    {% block script %}
     <script src="{{ url_for('static', filename='js/jquery-3.2.1.js') }}"></script>
     <script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/moment-with-locales.min.js') }}"></script>
+    {{ moment.include_moment() }}
+    {% endblock %}
 </body>
 </html>
 
