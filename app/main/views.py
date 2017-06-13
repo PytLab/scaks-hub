@@ -14,10 +14,23 @@ from flask import make_response, send_file, redirect, abort
 from . import main
 from .errors import PathError
 
-CODE_SUFFIXES = ['py', 'c', 'cpp', 'html', 'css', 'js', 'h']
-TEXT_SUFFIXES = ['txt', 'conf']
+# Global variables.
+CODE_SUFFIXES = dict(py='python',
+                     c='c',
+                     cpp='cpp',
+                     html='html',
+                     css='css',
+                     js='javascript',
+                     h='c',
+                     conf='text',
+                     txt='text')
+
+TEXT_SUFFIXES = dict(conf='text',
+                     txt='text')
+
 ZIP_SUFFIXES = ['zip', 'rar', 'tar', 'tgz', '7z', 'gz']
-FILE_SUFFIXES = CODE_SUFFIXES + TEXT_SUFFIXES + ZIP_SUFFIXES
+
+FILE_SUFFIXES = {**CODE_SUFFIXES, **TEXT_SUFFIXES}
 
 @main.route('/')
 def index():
@@ -26,8 +39,10 @@ def index():
 @main.route('/tree/', defaults={'path': ''})
 @main.route('/tree/<path:path>', methods=['GET', 'POST'])
 def filetree(path):
+    # Parameters passed to template.
     locs = {}
 
+    # Current path information.
     base_path = os.getcwd()
     full_path = '{}/{}'.format(base_path, path)
 
@@ -94,14 +109,17 @@ def filetree(path):
             locs['prev_link'] = None
 
         return render_template('file_tree.html', **locs)
-    elif full_path.split('.')[-1] in FILE_SUFFIXES:
-        with open(full_path, 'r') as f:
-            file_content = f.read()
-        locs['file_content'] = file_content
-        return render_template('file_content.html', **locs)
     else:
-        response = make_response(send_file(full_path))
-        filename = full_path.split('/')[-1]
-        response.headers["Content-Disposition"] = "attachment; filename={};".format(filename)
-        return response
+        file_suffix = full_path.split('.')[-1]
+        if file_suffix in CODE_SUFFIXES:
+            with open(full_path, 'r') as f:
+                file_content = f.read()
+            locs['file_content'] = file_content
+            locs['file_type'] = CODE_SUFFIXES[file_suffix]
+            return render_template('file_content.html', **locs)
+        else:
+            response = make_response(send_file(full_path))
+            filename = full_path.split('/')[-1]
+            response.headers["Content-Disposition"] = "attachment; filename={};".format(filename)
+            return response
 
