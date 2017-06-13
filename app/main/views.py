@@ -88,7 +88,7 @@ def filetree(path):
         else:
             locs['prev_link'] = None
 
-        return render_template('filetree.html', **locs)
+        return render_template('file_tree.html', **locs)
     else:
         response = make_response(send_file(full_path))
         filename = full_path.split('/')[-1]
