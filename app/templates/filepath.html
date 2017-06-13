@@ -1,8 +1,10 @@
 <!-- Bread crumb navigator for file location -->
-<ul class="breadcrumb">
-    <li><a href="{{ url_for('main.index') }}"><i class="fa fa-home" aria-hidden="true"></i></a></li>
-    {% for link, subdir in links_paths %}
-    <li><b><a href="{{ link }}">{{ subdir }}</a></b></li>
-    {% endfor %}
-</ul>
+<div class="row">
+    <ul class="breadcrumb with-margin-top">
+        <li><a href="{{ url_for('main.index') }}"><i class="fa fa-home" aria-hidden="true"></i></a></li>
+        {% for link, subdir in links_paths %}
+        <li><b><a href="{{ link }}">{{ subdir }}</a></b></li>
+        {% endfor %}
+    </ul>
+</div>
 
