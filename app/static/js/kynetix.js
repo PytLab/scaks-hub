@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 /* Author: ShaoZhengjiang <shaozhengjiang@gmail.com> */
 
 ;(function($){
