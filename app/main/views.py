@@ -18,7 +18,7 @@ from .utils import file_mtime, file_ctime, file_size
 # Global variables.
 CODE_SUFFIXES = dict(py='python',
                      c='c',
-                     cpp='cpp',
+                     cpp='c',
                      html='html',
                      css='css',
                      js='javascript',
@@ -27,7 +27,8 @@ CODE_SUFFIXES = dict(py='python',
                      txt='text')
 
 TEXT_SUFFIXES = dict(conf='text',
-                     txt='text')
+                     txt='text',
+                     md='text')
 
 ZIP_SUFFIXES = ['zip', 'rar', 'tar', 'tgz', '7z', 'gz']
 
@@ -110,12 +111,11 @@ def filetree(path):
         return render_template('file_tree.html', **locs)
     else:
         file_suffix = full_path.split('.')[-1]
-        if file_suffix in CODE_SUFFIXES:
+        if file_suffix in FILE_SUFFIXES:
             with open(full_path, 'r') as f:
                 file_content = f.read()
             locs['file_content'] = file_content
-            locs['file_type'] = CODE_SUFFIXES[file_suffix]
-            locs['ctime'] = file_ctime(full_path)
+            locs['file_type'] = FILE_SUFFIXES[file_suffix]
             locs['mtime'] = file_mtime(full_path)
             locs['filesize'] = file_size(full_path)
             return render_template('file_content.html', **locs)
