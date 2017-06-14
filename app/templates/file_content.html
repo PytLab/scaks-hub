@@ -4,6 +4,18 @@
 {% include "navtabs.html" %}
 {% include "file_path.html" %}
 
+<!-- File info -->
+<div class="row">
+    <div class="well well-sm">
+        <span class="embeded-charactors">
+            <i class="fa fa-pencil"></i>{{ moment(mtime).format('LLL') }}
+        </span>
+        <span class="embeded-charactors pull-right">
+            <i class="fa fa-file-o"></i>{{ filesize }}
+        </span>
+    </div>
+</div>
+
 <!-- File content -->
 <div class="row">
     <pre><code data-language="{{ file_type }}">{{ file_content }}</code></pre>

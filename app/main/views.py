@@ -13,6 +13,7 @@ from flask import make_response, send_file, redirect, abort
 
 from . import main
 from .errors import PathError
+from .utils import file_mtime, file_ctime, file_size
 
 # Global variables.
 CODE_SUFFIXES = dict(py='python',
@@ -82,16 +83,14 @@ def filetree(path):
         dir_items = []
         for dir in sorted(dirs):
             link = '{}/{}'.format(url, dir)
-            timestamp = os.path.getmtime('{}/{}'.format(full_path, dir))
-            mtime = datetime.fromtimestamp(timestamp)
+            mtime = file_mtime('{}/{}'.format(full_path, dir))
             dir_item = FileItem._make([dir, link, mtime])
             dir_items.append(dir_item)
 
         file_items = []
         for file in sorted(files):
             link = '{}/{}'.format(url, file)
-            timestamp = os.path.getmtime('{}/{}'.format(full_path, file))
-            mtime = datetime.fromtimestamp(timestamp)
+            mtime = file_mtime('{}/{}'.format(full_path, file))
             file_item = FileItem._make([file, link, mtime])
             file_items.append(file_item)
 
@@ -116,6 +115,9 @@ def filetree(path):
                 file_content = f.read()
             locs['file_content'] = file_content
             locs['file_type'] = CODE_SUFFIXES[file_suffix]
+            locs['ctime'] = file_ctime(full_path)
+            locs['mtime'] = file_mtime(full_path)
+            locs['filesize'] = file_size(full_path)
             return render_template('file_content.html', **locs)
         else:
             response = make_response(send_file(full_path))
