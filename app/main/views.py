@@ -39,11 +39,14 @@ FILE_SUFFIXES = {**CODE_SUFFIXES, **TEXT_SUFFIXES}
 def index():
     return redirect(url_for('main.filetree'))
 
-@main.route('/tree/', defaults={'path': ''})
-@main.route('/tree/<path:path>', methods=['GET', 'POST'])
+@main.route('/files/', defaults={'path': ''})
+@main.route('/files/<path:path>', methods=['GET', 'POST'])
 def filetree(path):
     # Parameters passed to template.
     locs = {}
+
+    # Activate navigation tab.
+    locs['files'] = 'active'
 
     # Current path information.
     base_path = os.getcwd()

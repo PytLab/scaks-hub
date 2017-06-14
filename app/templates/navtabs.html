@@ -1,11 +1,9 @@
 <!-- Navigator tabs -->
 <div class="row">
     <ul class="nav nav-tabs">
-        <li class="active"><a>Files</a></li>
-        <li><a>Reactions</a></li>
-        <li><a>Kinetic Model</a></li>
-        <li><a>Running</a></li>
-        <li><a>Results</a></li>
+        <li class="{{ files }}"><a href="{{ url_for('main.filetree') }}">Files</a></li>
+        <li class="{{ model }}"><a>Model</a></li>
+        <li class="{{ running }}"><a>Running</a></li>
     </ul>
 </div>
 
