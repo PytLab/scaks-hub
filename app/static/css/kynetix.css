@@ -27,3 +27,10 @@ i {
     float: right;
 }
 
+/* File content styles */
+@media (max-width: 768px) {
+    .file-info > .text-center {
+        text-align: left;
+    }
+}
+
