@@ -42,16 +42,14 @@ def file_size(file_path):
 def file_ctime(file_path):
     ''' Get the creation time of a file.
     '''
-    if os.path.isfile(file_path):
-        ctime = os.path.getctime(file_path)
-        return datetime.fromtimestamp(ctime)
+    ctime = os.path.getctime(file_path)
+    return datetime.fromtimestamp(ctime)
 
 
 @check_file_exists
 def file_mtime(file_path):
     ''' Get the modification time of a file.
     '''
-    if os.path.isfile(file_path):
-        ctime = os.path.getmtime(file_path)
-        return datetime.fromtimestamp(ctime)
+    ctime = os.path.getmtime(file_path)
+    return datetime.fromtimestamp(ctime)
 

@@ -28,7 +28,8 @@ CODE_SUFFIXES = dict(py='python',
 
 TEXT_SUFFIXES = dict(conf='text',
                      txt='text',
-                     md='text')
+                     md='text',
+                     log='text')
 
 ZIP_SUFFIXES = ['zip', 'rar', 'tar', 'tgz', '7z', 'gz']
 
@@ -118,6 +119,7 @@ def filetree(path):
             locs['file_type'] = FILE_SUFFIXES[file_suffix]
             locs['mtime'] = file_mtime(full_path)
             locs['filesize'] = file_size(full_path)
+            locs['filename'] = full_path.split('/')[-1]
             return render_template('file_content.html', **locs)
         else:
             response = make_response(send_file(full_path))
