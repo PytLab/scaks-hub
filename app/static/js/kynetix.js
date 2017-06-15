@@ -45,17 +45,26 @@
         $this = $(this);
         $i = $this.find('i');
 
-        var down = 'fa-arrow-circle-o-down';
-        var right = 'fa-arrow-circle-o-right';
+        if ($.support.transition) {
+            // When open panel body.
+            if ($i.hasClass('rotate-icon') && !$i.hasClass('rotate-anticlockwise')) {
+                $i.addClass('rotate-anticlockwise');
+            // When close panel body.
+            } else if ($i.hasClass('rotate-icon') && $i.hasClass('rotate-anticlockwise')) {
+                $i.removeClass('rotate-anticlockwise');
+            }
+        // For browsers not supporting CSS3
+        } else {  
+            var down = 'fa-arrow-circle-o-down';
+            var right = 'fa-arrow-circle-o-right';
 
-        // Open panel body.
-        if ($i.hasClass(down)) {
-            $i.removeClass(down);
-            $i.addClass(right);
-        // Close panel body.
-        } else if ($i.hasClass(right)) {
-            $i.removeClass(right);
-            $i.addClass(down);
+            if ($.hasClass(down)) {
+                $i.removeClass(down);
+                $i.addClass(right);
+            } else {
+                $i.removeClass(right);
+                $i.addClass(down);
+            }
         }
     });
 })(jQuery);
