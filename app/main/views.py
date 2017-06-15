@@ -40,7 +40,7 @@ def index():
     return redirect(url_for('main.filetree'))
 
 @main.route('/files/', defaults={'path': ''})
-@main.route('/files/<path:path>', methods=['GET', 'POST'])
+@main.route('/files/<path:path>')
 def filetree(path):
     # Parameters passed to template.
     locs = {}
@@ -129,4 +129,12 @@ def filetree(path):
             filename = full_path.split('/')[-1]
             response.headers["Content-Disposition"] = "attachment; filename={};".format(filename)
             return response
+
+@main.route('/model')
+def model():
+    locs = {}
+
+    # Activate navigation tab.
+    locs['model'] = 'active'
+    return render_template('model/model.html', **locs)
 
