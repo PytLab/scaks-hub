@@ -112,7 +112,7 @@ def filetree(path):
         else:
             locs['prev_link'] = None
 
-        return render_template('file_tree.html', **locs)
+        return render_template('files/file_tree.html', **locs)
     else:
         file_suffix = full_path.split('.')[-1]
         if file_suffix in FILE_SUFFIXES:
@@ -123,7 +123,7 @@ def filetree(path):
             locs['mtime'] = file_mtime(full_path)
             locs['filesize'] = file_size(full_path)
             locs['filename'] = full_path.split('/')[-1]
-            return render_template('file_content.html', **locs)
+            return render_template('files/file_content.html', **locs)
         else:
             response = make_response(send_file(full_path))
             filename = full_path.split('/')[-1]
