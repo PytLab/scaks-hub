@@ -74,6 +74,7 @@ def filetree(path):
 
     locs['links_paths'] = links_paths
 
+    # Show file tree.
     if os.path.isdir(full_path):
         # File list.
         dirs_files  = os.listdir(full_path)
@@ -115,6 +116,8 @@ def filetree(path):
         return render_template('files/file_tree.html', **locs)
     else:
         file_suffix = full_path.split('.')[-1]
+
+        # Show text file content.
         if file_suffix in FILE_SUFFIXES:
             with open(full_path, 'r') as f:
                 file_content = f.read()
@@ -124,13 +127,14 @@ def filetree(path):
             locs['filesize'] = file_size(full_path)
             locs['filename'] = full_path.split('/')[-1]
             return render_template('files/file_content.html', **locs)
+        # Download the file.
         else:
             response = make_response(send_file(full_path))
             filename = full_path.split('/')[-1]
             response.headers["Content-Disposition"] = "attachment; filename={};".format(filename)
             return response
 
-@main.route('/model')
+@main.route('/model/')
 def model():
     locs = {}
 
