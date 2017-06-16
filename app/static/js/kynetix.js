@@ -3,7 +3,7 @@
 ;(function($){
     "use restrict";
 
-    // Refresh the file table asynchronously.
+    /* Refresh the file table asynchronously */
     $("#refresh-file-table").click(function(){
         // Show loading animation.
         var ajax_load = '<div class="text-center">' +
@@ -40,7 +40,7 @@
     });
 
 
-    // Panel collapse.
+    /* Panel collapse */
     $(document).on('click', '[data-toggle=collapse]', function() {
         $this = $(this);
         $i = $this.find('i');
@@ -66,6 +66,13 @@
                 $i.addClass(down);
             }
         }
+    });
+
+    /* Reaction definition modal */
+    $('.close-rxn-definition').each(function() {
+        $(this).click(function() {
+            $('#rxn-definition').modal('toggle');
+        });
     });
 })(jQuery);
 
