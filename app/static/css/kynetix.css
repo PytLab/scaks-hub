@@ -38,9 +38,9 @@ i {
     }
 }
 
-/* Model panels styles */
+/* Model styles */
 
-/* panel title上的icon旋转 */
+/* Reaction panel title */
 .rotate-icon {
     -moz-transition: all 0.3s ease;
     -webkit-transition: all 0.3s ease;
@@ -57,3 +57,25 @@ i {
     -o-transform: rotate(-90deg);
 }
 
+/* Reaction table */
+.rxn-table {
+    margin-top: 20px;
+}
+.rxn-table > thead {
+    font-weight: bold;
+    opacity: 0.5;
+}
+
+.rxn-table > tbody > tr > td:nth-child(2),
+.rxn-table > tbody > tr > td:nth-child(3) {
+    font-family: Courier New, consola;
+}
+
+.rxn-table > tbody > tr > td > i {
+    margin: 0;
+}
+
+.rxn-table > tbody > tr.disabled {
+    background-color: #F6F6F6;
+    opacity: 0.6;
+}
