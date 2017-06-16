@@ -26,9 +26,14 @@ i {
     float: right;
 }
 
-/* File content styles */
 @media (max-width: 768px) {
+    /* File content styles */
     .file-info > .text-center {
+        text-align: left;
+    }
+
+    /* File buttons for small screen */
+    .file-buttons .text-right {
         text-align: left;
     }
 }
