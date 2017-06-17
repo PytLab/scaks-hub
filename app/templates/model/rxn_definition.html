@@ -1,0 +1,41 @@
+<!-- Reaction definition modal -->
+<div class="modal fade" id="rxn-definition">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header embeded-charactors"><i class="fa fa-plus-square"></i>New Elementary Reaction
+			    <button class="close close-rxn-definition" type="button">&times;</button>
+			</div>
+			<div class="modal-body">
+				<form>
+					<div class="input-group with-margin-bottom">
+						<span class="input-group-addon">IS</span>
+						<input type="text" class="form-control" name="IS" placeholder="Initial State">
+					</div>
+					<div class="input-group with-margin-bottom">
+						<span class="input-group-addon">TS</span>
+						<input type="text" class="form-control" name="TS" placeholder="Transition State">
+					</div>
+					<div class="input-group with-margin-bottom">
+						<span class="input-group-addon">FS</span>
+						<input type="text" class="form-control" name="FS" placeholder="Final State">
+					</div>
+					<div class="input-group with-margin-bottom">
+						<span class="input-group-addon">G<sub>a</sub></span>
+						<input type="text" class="form-control" name="Ga" placeholder="Activation Energy">
+						<span class="input-group-addon">eV</span>
+					</div>
+					<div class="input-group with-margin-bottom">
+						<span class="input-group-addon">&Delta;G</span>
+						<input type="text" class="form-control" name="dG" placeholder="Reaction Energy">
+						<span class="input-group-addon">eV</span>
+					</div>
+				</form>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default btn-sm close-rxn-definition"><i class="fa fa-times"></i>Cancel</button>
+				<button type="button" class="btn btn-default btn-sm" id="reset-rxn-definition"><i class="fa fa-refresh"></i>Reset</button>
+				<button type="button" class="btn btn-primary btn-sm" id="add-to-rxn-table"><i class="fa fa-check"></i>Add</button>
+			</div>
+		</div>
+	</div>
+</div>
