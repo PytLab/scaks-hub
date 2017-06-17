@@ -72,10 +72,12 @@
 
     // Open rxn definition modal.
     $('.open-rxn-definition').each(function() {
+
         $(this).on('click.kyn', function(event) {
             event.preventDefault();
 
-            $('#rxn-definition').modal('show');
+            var options = {backdrop: 'static', show: true};
+            $('#rxn-definition').modal(options);
 
             var $ts = $('#rxn-definition input[name=TS]');
             var $Ga = $('#rxn-definition input[name=Ga]');
