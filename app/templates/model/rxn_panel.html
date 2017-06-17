@@ -10,8 +10,16 @@
 				<!-- Reactions buttons -->
 			    <div class="row">
 				    <div class="col-md-6">
-					    <button type="button" class="btn btn-sm btn-success" data-toggle="modal" data-target="#rxn-definition"><i class="fa fa-plus"></i>New</button>
-					    <button type="button" class="btn btn-sm btn-warning disabled"><i class="fa fa-ban"></i>Disable</button>
+					    <div class="btn-group">
+					    	<button data-toggle="dropdown" class="btn btn-sm btn-success dropdown-toggle" type="button">
+					    	<i class="fa fa-plus"></i>New
+					    	</button>
+							<ul class="dropdown-menu">
+								<li class="open-rxn-definition" id="with-barrier"><a href="">A <-> B -> C</a></li>
+								<li class="open-rxn-definition" id="no-barrier"><a href="">A -> B</a></li>
+							</ul>
+						</div>
+						<button type="button" class="btn btn-sm btn-warning disabled"><i class="fa fa-ban"></i>Disable</button>
 					    <button type="button" class="btn btn-sm btn-default disabled"><i class="fa fa-check"></i>Recover</button>
 					    <button type="button" class="btn btn-sm btn-danger disabled"><i class="fa fa-trash"></i>Delete</button>
 				    </div>

@@ -70,6 +70,19 @@
 
     /* Reaction definition modal */
 
+    // Open rxn definition modal.
+    $('.open-rxn-definition').each(function() {
+        $(this).on('click.kyn', function(event) {
+            event.preventDefault();
+
+            $('#rxn-definition').modal('show');
+            if (this.id == 'no-barrier') {
+                $('#rxn-definition input[name=TS]').attr('disabled', true);
+                $('#rxn-definition input[name=Ga]').val('0.0').attr('disabled', true)
+            }
+        });
+    })
+
     // Close rxn info modal.
     $('.close-rxn-definition').each(function() {
         $(this).on('click.kyn', function() {
