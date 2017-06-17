@@ -5,10 +5,10 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	{% block title %}{% endblock %}
-    <link href="{{ url_for('static', filename='css/bootstrap/bootstrap.min.css') }}" rel="stylesheet">
-    <link href="{{ url_for('static', filename='css/font-awesome/css/font-awesome.min.css') }}" rel="stylesheet">
-    <link href="{{ url_for('static', filename='css/rainbow/monokai.css') }}" rel="stylesheet">
-    <link href="{{ url_for('static', filename='css/rainbow/rainbow-linenumbers.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='css/externals/bootstrap/bootstrap.min.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='css/externals/font-awesome/css/font-awesome.min.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='css/externals/rainbow/monokai.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='css/externals/rainbow/rainbow-linenumbers.css') }}" rel="stylesheet">
     <link href="{{ url_for('static', filename='css/kynetix.css') }}" rel="stylesheet">
     <link href="{{ url_for('static', filename='img/icon.ico') }}" rel="icon">
 </head>
@@ -27,12 +27,13 @@
     </div>
 
     {% block script %}
-    <script src="{{ url_for('static', filename='js/jquery/jquery-3.2.1.js') }}"></script>
-    <script src="{{ url_for('static', filename='js/bootstrap/bootstrap.min.js') }}"></script>
-    <script src="{{ url_for('static', filename='js/moment/moment-with-locales.min.js') }}"></script>
-    <script src="{{ url_for('static', filename='js/rainbow/rainbow.min.js') }}"></script>
-    <script src="{{ url_for('static', filename='js/rainbow/rainbow.linenumbers.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/externals/jquery/jquery-3.2.1.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/externals/bootstrap/bootstrap.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/externals/moment/moment-with-locales.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/externals/rainbow/rainbow.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/externals/rainbow/rainbow.linenumbers.min.js') }}"></script>
     <script src="{{ url_for('static', filename='js/kynetix.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/form_status.js') }}"></script>
     {{ moment.include_moment() }}
     {% endblock %}
 </body>
