@@ -5,3 +5,12 @@
 {% include "model/rxn_panel.html" %}
 {% endblock %}
 
+{% block script %}
+{{ super() }}
+<script>
+    window.onbeforeunload = function (event) {
+        return confirm();
+    }
+</script>
+{% endblock %}
+

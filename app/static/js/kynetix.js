@@ -140,8 +140,9 @@
         })(is, ts, fs, Ga, dG);
 
         $('.rxn-table tbody').append($row);
-
         $('#rxn-definition').modal('hide');
     })
+
+    // Reaction definition check.
 })(jQuery);
 
