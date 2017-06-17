@@ -11,22 +11,12 @@
         <tbody>
 	        <tr>
 		        <td><input type="checkbox"></td>
-		        <td>
-			        <span class="IS">CO_g + *_s</span>
-			        <i class="fa fa-long-arrow-right"></i>
-			        <span class="FS">CO_s</span>
-		        </td>
+		        <td>CO_g + *_s -> CO_s</td>
 		        <td class="rxn-energies">(0.0, -0.8)</td>
 	        </tr>
 	        <tr>
 		        <td><input type="checkbox"></td>
-		        <td>
-			        <span class="IS">CO_s + O_s</span>
-			        <i class="fa fa-arrows-h"></i>
-			        <span class="TS">O-O_s + *_s</span>
-			        <i class="fa fa-long-arrow-right"></i>
-			        <span class="FS">O2_g + 2*_s</span>
-		        </td>
+		        <td>O2_g + 2*_s <-> O-O_s + *_s -> 2O_s</td>
 		        <td class="rxn-energies">(0.6, 0.3)</td>
 	        </tr>
         </tbody>
@@ -37,7 +27,7 @@
 <div class="modal fade" id="rxn-definition">
 	<div class="modal-dialog">
 		<div class="modal-content">
-			<div class="modal-header embeded-charactors">New Elementary Reaction
+			<div class="modal-header embeded-charactors"><i class="fa fa-plus-square"></i>New Elementary Reaction
 			    <button class="close close-rxn-definition" type="button">&times;</button>
 			</div>
 			<div class="modal-body">
@@ -69,7 +59,7 @@
 			<div class="modal-footer">
 				<button type="button" class="btn btn-default btn-sm close-rxn-definition"><i class="fa fa-times"></i>Cancel</button>
 				<button type="button" class="btn btn-default btn-sm" id="reset-rxn-definition"><i class="fa fa-refresh"></i>Reset</button>
-				<button type="button" class="btn btn-primary btn-sm"><i class="fa fa-check"></i>Add</button>
+				<button type="button" class="btn btn-primary btn-sm" id="add-to-rxn-table"><i class="fa fa-check"></i>Add</button>
 			</div>
 		</div>
 	</div>

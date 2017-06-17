@@ -71,10 +71,6 @@ i {
     font-family: Courier New, consola;
 }
 
-.rxn-table > tbody > tr > td > i {
-    margin: 0;
-}
-
 .rxn-table > tbody > tr.disabled {
     background-color: #F6F6F6;
     opacity: 0.6;
