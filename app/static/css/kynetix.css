@@ -79,3 +79,8 @@ i {
     background-color: #F6F6F6;
     opacity: 0.6;
 }
+
+/* Reaction definition modal */
+#rxn-definition .modal-body{
+    font-family: "Courier New", consola;
+}
