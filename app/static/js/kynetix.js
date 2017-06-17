@@ -69,10 +69,17 @@
     });
 
     /* Reaction definition modal */
+
+    // Close rxn info modal.
     $('.close-rxn-definition').each(function() {
         $(this).click(function() {
             $('#rxn-definition').modal('toggle');
         });
+    });
+
+    // Reset rxn definition form fields.
+    $('#reset-rxn-definition').click(function() {
+        $('#rxn-definition form input').val('');
     });
 })(jQuery);
 
