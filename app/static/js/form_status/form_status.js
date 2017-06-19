@@ -13,15 +13,17 @@
     FormStatus.DEFAULTS = {
         show: true,
         status: 'error',
-        msg: 'Error!'
+        msg: null
     };
 
     // Prototype methods.
     FormStatus.prototype.show = function(option) {
         var wrapper = '<div class="form-group has-' + option.status + '"></div>';
         this.$element.wrap(wrapper);
-        var msg_element = '<label class="control-label">' + option.msg + '</label>';
-        this.$element.before(msg_element);
+        if (option.msg) {
+            var msg_element = '<label class="control-label">' + option.msg + '</label>';
+            this.$element.before(msg_element);
+        }
     };
 
     FormStatus.prototype.remove = function(option) {
