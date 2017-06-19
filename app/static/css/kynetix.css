@@ -78,6 +78,6 @@ i {
 
 /* Reaction definition modal */
 #rxn-panel-body .dropdown-menu > li,
-#rxn-definition .modal-body{
+#rxn-definition .modal-body .input-group {
     font-family: "Courier New", consola;
 }
