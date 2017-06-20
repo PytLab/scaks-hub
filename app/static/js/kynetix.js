@@ -144,5 +144,124 @@
     })
 
     // Reaction definition check.
-})(jQuery);
+    var checkRxnEquation = function() {
+        // Get IS expression.
+        var isExp = $('#rxn-definition #IS-input > input').val();
+        var fsExp = $('#rxn-definition #FS-input > input').val();
+        var $ts = $('#rxn-definition #TS-input > input');
+        if ($ts.attr('disabled')) {
+            var tsExp = undefined;
+        } else {
+            var tsExp = $ts.val();
+        }
 
+        // Check initial state.
+        if (isExp == '') {
+            $('#IS-input').form_status({
+                show: true,
+                status: 'warning',
+                msg: 'Please enter the initial state expression!',
+            });
+            return false;
+        } else {
+            $('#IS-input').form_status({
+                remove: true
+            });
+        }
+
+        try {
+            var is = new ChemState(isExp);
+            $('#IS-input').form_status({
+                show: true,
+                status: 'success',
+                msg: ''
+            })
+        } catch(e) {
+            $('#IS-input') .form_status({
+                show: true,
+                status: 'error',
+                msg: e.message
+            });
+            return false;
+        }
+
+        // Check transition state.
+        if (tsExp != undefined) {
+            if(tsExp == '') {
+                $('#TS-input').form_status({
+                    show: true,
+                    status: 'warning',
+                    msg: 'Please enter the transition state expression!',
+                });
+                return false;
+            } else {
+                $('#TS-input').form_status({
+                    show: true,
+                    status: 'success',
+                    msg: ''
+                });
+            }
+
+            try {
+                var ts = new ChemState(tsExp);
+                $('#TS-input').form_status({
+                    show: true,
+                    status: 'success',
+                    msg: ''
+                });
+            } catch(e) {
+                $('#TS-input').form_status({
+                    show: true,
+                    status: 'error',
+                    msg: e.message
+                });
+                return false;
+            }
+        }
+
+        // Check final state.
+        if (fsExp == '') {
+            $('#FS-input').form_status({
+                show: true,
+                status: 'warning',
+                msg: 'Please enter the final state expression!',
+            });
+            return false;
+        } else {
+            $('#FS-input').form_status({
+                show: true,
+                status: 'success',
+                msg: ''
+            });
+        }
+
+        try {
+            var fs = new ChemState(fsExp);
+            $('#FS-input').form_status({
+                show: true,
+                status: 'warning',
+                msg: ''
+            });
+        } catch(e) {
+            $('#FS-input').form_status({
+                show: true,
+                status: 'error',
+                msg: e.message
+            });
+            return false;
+        }
+
+        // Check reaction equation conservation using interfaces of rxn-parser.js
+        var rxnEquation = tsExp == undefined ?
+                          isExp + ' -> ' + fsExp :
+                          isExp + ' <-> ' + tsExp + ' -> ' + fsExp;
+        var equation = new RxnEquation(rxnEquation);
+
+        return true;
+    };
+
+    // Binding blur callback to inputs.
+    $('#rxn-definition form .input-group > input').each(function() {
+        $(this).on('blur.kyn', checkRxnEquation);
+    });
+})(jQuery);
