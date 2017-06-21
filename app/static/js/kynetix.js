@@ -100,7 +100,7 @@
         });
     })
 
-    // Close rxn info modal.
+    /* Close rxn info modal */
     $('.close-rxn-definition').each(function() {
         $(this).on('click.kyn', function() {
             $('#rxn-definition').modal('toggle');
@@ -112,38 +112,7 @@
         $('#rxn-definition form input').val('');
     });
 
-    // Add elementary rxn to rxn table.
-
-    $('#add-to-rxn-table').on('click.kyn', function() {
-        // Reaction expression.
-        var is = $('#rxn-definition form input[name=IS]').val();
-        var fs = $('#rxn-definition form input[name=FS]').val();
-        var ts = $('#rxn-definition form input[name=TS]').val();
-        var Ga = $('#rxn-definition form input[name=Ga]').val();
-        var dG = $('#rxn-definition form input[name=dG]').val();
-
-        var $row = (function(is, ts, fs, Ga, dG) {
-            var $row = $('<tr></tr>')
-            var $checkbox = $('<td><input type="checkbox"></td>');
-            $row.append($checkbox);
-
-            if (ts) {
-                var expression = is + " <-> " + ts + ' -> ' + fs;
-            } else {
-                var expression = is + ' -> ' + fs;
-            }
-            $row.append($('<td>' + expression + '</td>'));
-
-            $row.append($('<td class="rxn-energies">(' + parseFloat(Ga).toFixed(1) +
-                          ', ' + parseFloat(dG).toFixed(1) + ')</span>'));
-            return $row;
-        })(is, ts, fs, Ga, dG);
-
-        $('.rxn-table tbody').append($row);
-        $('#rxn-definition').modal('hide');
-    })
-
-    // Reaction definition check.
+    /* Reaction and energy check */
     var checkRxnEquation = function() {
         // Get IS expression.
         var isExp = $('#rxn-definition #IS-input > input').val();
@@ -378,4 +347,53 @@
     $('#rxn-definition input.rxn-energy').each(function () {
         $(this).on('blur.kyn', checkRxnEnergy);
     });
+
+    /* Add elementary rxn to rxn table. */
+    var addAlertInfo = function(selector, dismiss_time) {
+        $element = $(selector);
+        $alert = $('<div class="alert alert-danger"></div>')
+            .append('<p>Please enter valid reaction definition !</p>');
+        $element.before($alert);
+
+        var dismiss_time = dismiss_time || 3000;
+        window.setTimeout(function() {
+            $element.prev().remove();
+        }, dismiss_time);
+    };
+
+    $('#add-to-rxn-table').on('click.kyn', function() {
+        // Check inputs firstly.
+        if (!(checkRxnEquation() && checkRxnEnergy())) {
+            addAlertInfo('#rxn-definition form');
+            return false;
+        }
+
+        // Reaction expression.
+        var is = $('#rxn-definition form input[name=IS]').val();
+        var fs = $('#rxn-definition form input[name=FS]').val();
+        var ts = $('#rxn-definition form input[name=TS]').val();
+        var Ga = $('#rxn-definition form input[name=Ga]').val();
+        var dG = $('#rxn-definition form input[name=dG]').val();
+
+        var $row = (function(is, ts, fs, Ga, dG) {
+            var $row = $('<tr></tr>')
+            var $checkbox = $('<td><input type="checkbox"></td>');
+            $row.append($checkbox);
+
+            if (ts) {
+                var expression = is + " <-> " + ts + ' -> ' + fs;
+            } else {
+                var expression = is + ' -> ' + fs;
+            }
+            $row.append($('<td>' + expression + '</td>'));
+
+            $row.append($('<td class="rxn-energies">(' + parseFloat(Ga).toFixed(1) +
+                          ', ' + parseFloat(dG).toFixed(1) + ')</span>'));
+            return $row;
+        })(is, ts, fs, Ga, dG);
+
+        $('.rxn-table tbody').append($row);
+        $('#rxn-definition').modal('hide');
+    })
+
 })(jQuery);
