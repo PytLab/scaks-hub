@@ -257,11 +257,32 @@
                           isExp + ' <-> ' + tsExp + ' -> ' + fsExp;
         var equation = new RxnEquation(rxnEquation);
 
+        try {
+            equation.checkConservation();
+            $('#IS-input, #TS-input, #FS-input').each(function() {
+                $(this).form_status({
+                    show: true,
+                    status: 'success',
+                    msg: ''
+                });
+            });
+        } catch(e) {
+            if (e.name == 'RxnEquationError') {
+                $('#IS-input, #TS-input, #FS-input').each(function() {
+                    $(this).form_status({
+                        show: true,
+                        status: 'error',
+                        msg: e.message
+                    });
+                });
+                return false;
+            }
+        }
         return true;
     };
 
     // Binding blur callback to inputs.
-    $('#rxn-definition form .input-group > input').each(function() {
+    $('#rxn-definition input.rxn-equation').each(function() {
         $(this).on('blur.kyn', checkRxnEquation);
     });
 })(jQuery);
