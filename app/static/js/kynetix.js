@@ -177,12 +177,14 @@
                 msg: ''
             })
         } catch(e) {
-            $('#IS-input') .form_status({
-                show: true,
-                status: 'error',
-                msg: e.message
-            });
-            return false;
+            if (e.name == 'RxnEquationError') {
+                $('#IS-input') .form_status({
+                    show: true,
+                    status: 'error',
+                    msg: e.htmlMsg
+                });
+                return false;
+            }
         }
 
         // Check transition state.
@@ -210,12 +212,14 @@
                     msg: ''
                 });
             } catch(e) {
-                $('#TS-input').form_status({
-                    show: true,
-                    status: 'error',
-                    msg: e.message
-                });
-                return false;
+                if (e.name == 'RxnEquationError') {
+                    $('#TS-input').form_status({
+                        show: true,
+                        status: 'error',
+                        msg: e.htmlMsg
+                    });
+                    return false;
+                }
             }
         }
 
@@ -243,12 +247,14 @@
                 msg: ''
             });
         } catch(e) {
-            $('#FS-input').form_status({
-                show: true,
-                status: 'error',
-                msg: e.message
-            });
-            return false;
+            if (e.name == 'RxnEquationError') {
+                $('#FS-input').form_status({
+                    show: true,
+                    status: 'error',
+                    msg: e.htmlMsg
+                });
+                return false;
+            }
         }
 
         // Check reaction equation conservation using interfaces of rxn-parser.js
@@ -272,12 +278,13 @@
                     $(this).form_status({
                         show: true,
                         status: 'error',
-                        msg: e.message
+                        msg: e.htmlMsg
                     });
                 });
                 return false;
             }
         }
+
         return true;
     };
 
