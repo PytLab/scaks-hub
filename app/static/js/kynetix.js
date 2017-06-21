@@ -292,4 +292,90 @@
     $('#rxn-definition input.rxn-equation').each(function() {
         $(this).on('blur.kyn', checkRxnEquation);
     });
+
+    var checkRxnEnergy = function() {
+        var $Ga = $('#rxn-definition #Ga-input > input');
+        var Ga = $Ga.attr('disabled') ? undefined : $Ga.val();
+        var dG = $('#rxn-definition #dG-input > input').val();
+
+        // Check empty energies.
+        if (Ga != undefined) {
+            if (Ga == '') {
+                $('#Ga-input').form_status({
+                    show: true,
+                    status: 'warning',
+                    msg: 'Please enter the activation energy !'
+                });
+                return false;
+            } else if (isNaN(Ga)) {
+                $('#Ga-input').form_status({
+                    show: true,
+                    status: 'error',
+                    msg: '<span style="font-family: Courier New, consola">'
+                         + Ga + '</span>'
+                         + ' is not a number !'
+                });
+                return false;
+            } else {
+                $('#Ga-input').form_status({
+                    show: true,
+                    status: 'success',
+                    msg: ''
+                });
+            }
+        }
+
+        if (dG == '') {
+            $('#dG-input').form_status({
+                show: true,
+                status: 'warning',
+                msg: 'Please enter the reaction energy !'
+            });
+            return false;
+        } else if (isNaN(dG)) {
+            $('#dG-input').form_status({
+                show: true,
+                status: 'error',
+                msg: '<span style="font-family: Courier New, consola">'
+                     + dG + '</span>'
+                     + ' is not a number!'
+            });
+            return false;
+        } else {
+            $('#dG-input').form_status({
+                show: true,
+                status: 'success',
+                msg: ''
+            });
+        }
+
+        // Check energies validity.
+        if (Ga != undefined && parseFloat(Ga) <= parseFloat(dG)) {
+            $('#Ga-input, #dG-input').each(function() {
+                $(this).form_status({
+                    show: true,
+                    status: 'error',
+                    msg: 'Invalid energies'
+                         + '<span style="font-family: Courier New, consola">'
+                         + '(' + Ga + ', ' + dG + ')'
+                         + '</span> !'
+                });
+            });
+            return false;
+        }
+
+        $('#Ga-input, #dG-input').each(function() {
+            $(this).form_status({
+                show: true,
+                status: 'success',
+                msg: ''
+            });
+        });
+        return true;
+    };
+
+    // Binding blur callback function to energy inputs.
+    $('#rxn-definition input.rxn-energy').each(function () {
+        $(this).on('blur.kyn', checkRxnEnergy);
+    });
 })(jQuery);
