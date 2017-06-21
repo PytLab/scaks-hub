@@ -41,7 +41,7 @@
 
 
     /* Panel collapse */
-    $(document).on('click', '[data-toggle=collapse]', function() {
+    $(document).on('click.kyn', '[data-toggle=collapse]', function() {
         $this = $(this);
         $i = $this.find('i');
 
@@ -66,6 +66,16 @@
                 $i.addClass(down);
             }
         }
+    });
+
+    /* Disable reactions */
+    $('#disable-rxns').on('click.kyn', function() {
+        $('.rxn-table input:checkbox:checked').each(function () {
+            $tr = $(this).parents('tr')
+            if (!$tr.hasClass('disabled')) {
+                $tr.addClass('disabled');
+            }
+        });
     });
 
     /* Reaction definition modal */
@@ -98,7 +108,7 @@
                 }
             }
         });
-    })
+    });
 
     /* Close rxn info modal */
     $('.close-rxn-definition').each(function() {
@@ -112,7 +122,7 @@
         });
     });
 
-    // Reset rxn definition form fields.
+    /* Reset rxn definition form fields */
     $('#reset-rxn-definition').on('click.kyn', function() {
         $('#rxn-definition form input').val('');
 
@@ -404,6 +414,6 @@
 
         $('.rxn-table tbody').append($row);
         $('#rxn-definition').modal('hide');
-    })
+    });
 
 })(jQuery);
