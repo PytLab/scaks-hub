@@ -103,7 +103,12 @@
     /* Close rxn info modal */
     $('.close-rxn-definition').each(function() {
         $(this).on('click.kyn', function() {
+            // Close modal.
             $('#rxn-definition').modal('toggle');
+            // Clear form status information.
+            $('#rxn-definition form .input-group').each(function() {
+                $(this).form_status({ remove: true });
+            });
         });
     });
 
