@@ -67,5 +67,4 @@
         $.fn.form_status = old;
         return this;
     };
-
 })(window.jQuery)

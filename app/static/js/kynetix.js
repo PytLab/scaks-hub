@@ -110,6 +110,11 @@
     // Reset rxn definition form fields.
     $('#reset-rxn-definition').on('click.kyn', function() {
         $('#rxn-definition form input').val('');
+
+        // Remove all form statu info.
+        $('#rxn-definition form .input-group').each(function() {
+            $(this).form_status({ remove: true });
+        });
     });
 
     /* Reaction and energy check */
