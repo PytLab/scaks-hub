@@ -70,7 +70,7 @@
 
     /* Disable reactions */
     $('#disable-rxns').on('click.kyn', function() {
-        $('.rxn-table input:checkbox:checked').each(function () {
+        $('#rxn-table input:checkbox:checked').each(function () {
             $tr = $(this).parents('tr')
             if (!$tr.hasClass('disabled')) {
                 $tr.addClass('disabled');
@@ -80,7 +80,7 @@
 
     /* Recover disabled reactions */
     $('#recover-rxns').on('click.kyn', function() {
-        $('.rxn-table input:checkbox:checked').each(function() {
+        $('#rxn-table input:checkbox:checked').each(function() {
             $tr = $(this).parents('tr');
             if ($tr.hasClass('disabled')) {
                 $tr.removeClass('disabled');
@@ -90,10 +90,14 @@
 
     /* Delete selected reactions */
     $('#delete-rxns').on('click.kyn', function() {
-        $('.rxn-table input:checkbox:checked').each(function() {
+        $('#rxn-table input:checkbox:checked').each(function() {
             $(this).parents('tr').remove();
         });
-    })
+        if ($('#rxn-table').find('tr').length <= 1) {
+            $('#rxn-table').css('display', 'none');
+            $('#no-rxns').css('display', 'block');
+        }
+    });
 
 })(jQuery);
 
