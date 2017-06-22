@@ -35,6 +35,37 @@ ZIP_SUFFIXES = ['zip', 'rar', 'tar', 'tgz', '7z', 'gz']
 
 FILE_SUFFIXES = {**CODE_SUFFIXES, **TEXT_SUFFIXES}
 
+
+# --------------------------------------------------------
+# Utility functions.
+# --------------------------------------------------------
+
+def get_links_paths(full_path, path):
+    ''' Get all accumulate links and subdirs for a given path.
+    '''
+    if path:
+        if not os.path.exists(full_path):
+            raise PathError('No such file or directory: {}'.format(full_path))
+        path = [subdir for subdir in path.split('/') if subdir]
+
+        # Links for each subdir in path information.
+        path_links = []
+        base_link = url_for('main.filetree')[:-1]
+        accumulate_link = base_link
+        for subdir in path:
+            accumulate_link += ('/' + subdir)
+            path_links.append(accumulate_link)
+        links_paths = zip(path_links, path)
+    else:
+        links_paths = []
+
+    return links_paths
+
+
+# --------------------------------------------------------
+# Flask view functions.
+# --------------------------------------------------------
+
 @main.route('/')
 def index():
     return redirect(url_for('main.filetree'))
@@ -53,26 +84,8 @@ def filetree(path):
     full_path = '{}/{}'.format(base_path, path)
 
     # Path information.
-    if path:
-        if not os.path.exists(full_path):
-            raise PathError('No such file or directory: {}'.format(full_path))
-        path = [subdir for subdir in path.split('/') if subdir]
-
-        # Directory backward.
-        prev_path = '/'.join(path[: -1])
-
-        # Links for each subdir in path information.
-        path_links = []
-        base_link = url_for('main.filetree')[:-1]
-        accumulate_link = base_link
-        for subdir in path:
-            accumulate_link += ('/' + subdir)
-            path_links.append(accumulate_link)
-        links_paths = zip(path_links, path)
-    else:
-        links_paths = []
-
-    locs['links_paths'] = links_paths
+    locs['links_paths'] = get_links_paths(full_path, path)
+    locs['path'] = path
 
     # Show file tree.
     if os.path.isdir(full_path):
@@ -133,12 +146,4 @@ def filetree(path):
             filename = full_path.split('/')[-1]
             response.headers["Content-Disposition"] = "attachment; filename={};".format(filename)
             return response
-
-@main.route('/model/')
-def model():
-    locs = {}
-
-    # Activate navigation tab.
-    locs['model'] = 'active'
-    return render_template('model/model.html', **locs)
 

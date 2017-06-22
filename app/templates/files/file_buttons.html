@@ -2,11 +2,7 @@
     <div class="row file-buttons">
         <div class="col-xs-12 col-sm-6 col-md-6">
             <div class="btn-group btn-group-sm with-margin-bottom">
-                {% if prev_link %}
-                <a class="btn btn-default" href="{{ prev_link }}"><i class="fa fa-arrow-circle-left"></i>Backward</a>
-                {% else %}
-                <button type="button" class="btn btn-default disabled"><i class="fa fa-arrow-circle-left"></i>Backward</button>
-                {% endif %}
+                <a class="btn btn-success" href="{{ url_for('main.model', path=path) }}"><i class="fa fa-play-circle"></i><b>Create a job</b></a>
             </div>
         </div>
 
