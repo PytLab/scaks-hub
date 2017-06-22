@@ -58,20 +58,20 @@ i {
 }
 
 /* Reaction table */
-.rxn-table {
+#rxn-table {
     margin-top: 20px;
 }
-.rxn-table > thead {
+#rxn-table thead {
     font-weight: bold;
     opacity: 0.5;
 }
 
-.rxn-table > tbody > tr > td:nth-child(2),
-.rxn-table > tbody > tr > td:nth-child(3) {
+#rxn-table tbody > tr > td:nth-child(2),
+#rxn-table tbody > tr > td:nth-child(3) {
     font-family: Courier New, consola;
 }
 
-.rxn-table > tbody > tr.disabled {
+#rxn-table tbody > tr.disabled {
     background-color: #F6F6F6;
     opacity: 0.3;
 }

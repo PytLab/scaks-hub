@@ -1,5 +1,16 @@
 <!-- Reactions -->
-<div class="row">
+<div class="row" id="no-rxns" style="display: block">
+    <div class="col-md-1"></div>
+    <div class="col-md-10 text-center with-margin-top">
+        <div class="well embeded-charactors">
+            No elementary reaction added, press
+            <b><i class="fa fa-plus"></i>New</b>
+            button to add one
+        </div>
+    </div>
+    <div class="col-md-1"></div>
+</div>
+<div class="row" id="rxn-table" style="display: none">
     <table class="table table-hover rxn-table">
         <thead>
 	        <tr>
@@ -9,16 +20,6 @@
 	        </tr>
         </thead>
         <tbody>
-	        <tr>
-		        <td><input type="checkbox"></td>
-		        <td>CO_g + *_s -> CO_s</td>
-		        <td class="rxn-energies">(0.0, -0.8)</td>
-	        </tr>
-	        <tr>
-		        <td><input type="checkbox"></td>
-		        <td>O2_g + 2*_s <-> O-O_s + *_s -> 2O_s</td>
-		        <td class="rxn-energies">(0.6, 0.3)</td>
-	        </tr>
         </tbody>
     </table>
 </div>

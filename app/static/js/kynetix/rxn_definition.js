@@ -336,6 +336,12 @@
             return $row;
         })(is, ts, fs, Ga, dG);
 
+        if ($('#no-rxns').css('display') != 'none') {
+            $('#no-rxns').css('display', 'none');
+        }
+        if ($('#rxn-table').css('display') == 'none') {
+            $('#rxn-table').css('display', 'block');
+        }
         $('.rxn-table tbody').append($row);
         $('#rxn-definition').modal('hide');
     });
