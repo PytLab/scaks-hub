@@ -296,7 +296,7 @@
     var addAlertInfo = function(selector, dismiss_time) {
         $element = $(selector);
         $alert = $('<div class="alert alert-danger"></div>')
-            .append('<p>Please enter valid reaction definition !</p>');
+            .append('<p><b>Please enter valid reaction definition !</b></p>');
         $element.before($alert);
 
         var dismiss_time = dismiss_time || 3000;
