@@ -73,7 +73,7 @@ i {
 
 .rxn-table > tbody > tr.disabled {
     background-color: #F6F6F6;
-    opacity: 0.6;
+    opacity: 0.3;
 }
 
 /* Reaction definition modal */
