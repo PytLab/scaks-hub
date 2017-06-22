@@ -34,27 +34,27 @@
         });
     });
 
+    var clearRxnDefinition = function() {
+        $('#rxn-definition form input').val('');
+        // Remove all form statu info.
+        $('#rxn-definition form .input-group').each(function() {
+            $(this).form_status({ remove: true });
+        });
+    };
+
     /* Close rxn info modal */
     $('.close-rxn-definition').each(function() {
         $(this).on('click.kyn', function() {
             // Close modal.
             $('#rxn-definition').modal('toggle');
-            // Clear form status information.
-            $('#rxn-definition form .input-group').each(function() {
-                $(this).form_status({ remove: true });
-            });
+
+            // Clear all inputs.
+            clearRxnDefinition();
         });
     });
 
     /* Reset rxn definition form fields */
-    $('#reset-rxn-definition').on('click.kyn', function() {
-        $('#rxn-definition form input').val('');
-
-        // Remove all form statu info.
-        $('#rxn-definition form .input-group').each(function() {
-            $(this).form_status({ remove: true });
-        });
-    });
+    $('#reset-rxn-definition').on('click.kyn', clearRxnDefinition);
 
     /* Reaction and energy check */
     var checkRxnEquation = function() {
@@ -336,14 +336,17 @@
             return $row;
         })(is, ts, fs, Ga, dG);
 
+        // Hide information well and show table header.
         if ($('#no-rxns').css('display') != 'none') {
             $('#no-rxns').css('display', 'none');
         }
         if ($('#rxn-table').css('display') == 'none') {
             $('#rxn-table').css('display', 'block');
         }
+
         $('.rxn-table tbody').append($row);
         $('#rxn-definition').modal('hide');
+        clearRxnDefinition();
     });
 })(jQuery);
 
