@@ -78,5 +78,15 @@
         });
     });
 
+    /* Recover disabled reactions */
+    $('#recover-rxns').on('click.kyn', function() {
+        $('.rxn-table input:checkbox:checked').each(function() {
+            $tr = $(this).parents('tr');
+            if ($tr.hasClass('disabled')) {
+                $tr.removeClass('disabled');
+            }
+        });
+    });
+
 })(jQuery);
 
