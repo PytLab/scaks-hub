@@ -88,5 +88,12 @@
         });
     });
 
+    /* Delete selected reactions */
+    $('#delete-rxns').on('click.kyn', function() {
+        $('.rxn-table input:checkbox:checked').each(function() {
+            $(this).parents('tr').remove();
+        });
+    })
+
 })(jQuery);
 
