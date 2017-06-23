@@ -88,6 +88,46 @@
         });
     });
 
+    /* Save current rxns */
+    $('#save-rxns').on('click.kyn', function() {
+        $(this).siblings('img').css('display', 'inline');
+        if ($('#rxn-table').css('display') == 'none'
+                && $('#no-rxns').css('display') == 'block') {
+            $warn = $('<div class="alert alert-warning with-margin-top"></div>');
+            $warn.html('<b>No reaction can be saved !</b>')
+            $('#no-rxns').before($warn);
+            window.setTimeout(function() {
+                $('#no-rxns').prev().remove();
+            }, 5000);
+            $(this).siblings('img').css('display', 'none');
+        } else {
+            var rxn_expressions = [];
+            var Gas = [], dGs = [];
+            $('#rxn-table tbody > tr').each(function() {
+                var expr = $(this).find('td.rxn-expression').text();
+                rxn_expressions.push(expr);
+                var Ga = $(this).find('td.rxn-energies').data('ga');
+                var dG = $(this).find('td.rxn-energies').data('dg');
+                Gas.push(Ga);
+                dGs.push(dG);
+            });
+            // Post.
+            $.post("/model/save/", {
+                'rxn_expressions': rxn_expressions.toString(),
+                'Gas': Gas.toString(),
+                'dGs': dGs.toString(),
+                'full_path': $('#full-path').data('full-path')
+            });
+            $success = $('<div class="alert alert-success with-margin-top"></div>');
+            $success.html('<b>Saved!</b>')
+            $('#no-rxns').before($success);
+            window.setTimeout(function() {
+                $('#no-rxns').prev().remove();
+            }, 5000);
+            $(this).siblings('img').css('display', 'none');
+        }
+    });
+
     /* Delete selected reactions */
     $('#delete-rxns').on('click.kyn', function() {
         $('#rxn-table input:checkbox:checked').each(function() {

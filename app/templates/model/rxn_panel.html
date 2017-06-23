@@ -24,13 +24,15 @@
 						</div>
 						<button type="button" id="disable-rxns" class="btn btn-sm btn-warning"><i class="fa fa-ban"></i>Disable</button>
 					    <button type="button" id="recover-rxns" class="btn btn-sm btn-default"><i class="fa fa-check"></i>Recover</button>
+                        <button type="button" id="save-rxns" class="btn btn-sm btn-primary"><i class="fa fa-floppy-o"></i>Save</button>
 					    <button type="button" id="delete-rxns" class="btn btn-sm btn-danger"><i class="fa fa-trash"></i>Delete</button>
+                        <img class="with-margin-left" src="/static/img/broken-circle-20x20.gif" alt="Loading" style="display: none">
 				    </div>
 			    </div>
                 {% include "model/rxn_table.html" %}
 
                 <!-- Loading animation -->
-                <div class="text-center">
+                <div class="text-center loading">
 	                <img src="/static/img/broken-circle.gif" alt="Loading..." style="display:none">
                 </div>
 			</div>

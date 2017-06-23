@@ -329,7 +329,7 @@
             } else {
                 var expression = is + ' -> ' + fs;
             }
-            $row.append($('<td>' + expression + '</td>'));
+            $row.append($('<td class="rxn-expression">' + expression + '</td>'));
 
             Ga = parseFloat(Ga);
             dG = parseFloat(dG);
