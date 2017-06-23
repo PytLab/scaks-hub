@@ -331,8 +331,10 @@
             }
             $row.append($('<td>' + expression + '</td>'));
 
-            $row.append($('<td class="rxn-energies">(' + parseFloat(Ga).toFixed(1) +
-                          ', ' + parseFloat(dG).toFixed(1) + ')</span>'));
+            Ga = parseFloat(Ga);
+            dG = parseFloat(dG);
+            $row.append($('<td class="rxn-energies" data-Ga="' + Ga + '" data-dG="' + dG + '">('
+                          + Ga.toFixed(1) + ', ' + dG.toFixed(1) + ')</td>'));
             return $row;
         })(is, ts, fs, Ga, dG);
 
@@ -344,7 +346,7 @@
             $('#rxn-table').css('display', 'block');
         }
 
-        $('.rxn-table tbody').append($row);
+        $('#rxn-table tbody').append($row);
         $('#rxn-definition').modal('hide');
         clearRxnDefinition();
     });
