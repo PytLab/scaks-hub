@@ -1,5 +1,9 @@
 <!-- Reactions -->
+{% if rxn_info %}
+<div class="row" id="no-rxns" style="display: none">
+{% else %}
 <div class="row" id="no-rxns" style="display: block">
+{% endif %}
     <div class="col-md-12 text-center with-margin-top">
         <div class="well embeded-charactors">
             No elementary reaction added, press
@@ -8,7 +12,12 @@
         </div>
     </div>
 </div>
+
+{% if rxn_info %}
+<div class="row" id="rxn-table" style="display: block">
+{% else %}
 <div class="row" id="rxn-table" style="display: none">
+{% endif %}
     <table class="table table-hover">
         <thead>
 	        <tr>
@@ -18,6 +27,15 @@
 	        </tr>
         </thead>
         <tbody>
+        {% for expr, Ga, dG in rxn_info %}
+            <tr>
+                <td><input type="checkbox"></td>
+                <td class="rxn-expression">{{ expr }}</td>
+                <td class="rxn-energies" data-Ga="{{ Ga }}" data-dG="{{ dG }}">
+                    ({{ Ga }}, {{ dG }})
+                </td>
+            </tr>
+        {% endfor %}
         </tbody>
     </table>
 </div>

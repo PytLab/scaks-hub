@@ -39,5 +39,9 @@
         });
     });
 
+    $('#open-job').on('click.kyn', function(event) {
+        event.preventDefault();
+    });
+
 })(jQuery);
 
