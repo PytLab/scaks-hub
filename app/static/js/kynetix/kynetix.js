@@ -112,19 +112,34 @@
                 dGs.push(dG);
             });
             // Post.
-            $.post("/model/save/", {
-                'rxn_expressions': rxn_expressions.toString(),
-                'Gas': Gas.toString(),
-                'dGs': dGs.toString(),
-                'full_path': $('#full-path').data('full-path')
+            $.ajax({
+                url: '/model/save/',
+                type: 'POST',
+                data: {
+                    'rxn_expressions': rxn_expressions.toString(),
+                    'Gas': Gas.toString(),
+                    'dGs': dGs.toString(),
+                    'full_path': $('#full-path').data('full-path')
+                },
+                success: function(data, textStatus) {
+                    $success = $('<div class="alert alert-success with-margin-top"></div>');
+                    $success.html('<b>reactions and energies are saved in current directory!</b>')
+                    $('#no-rxns').before($success);
+                    window.setTimeout(function() {
+                        $('#no-rxns').prev().remove();
+                    }, 5000);
+                    $('#save-rxns').siblings('img').css('display', 'none');
+                },
+                error: function(XMLHttpRequest, textStatus) {
+                    $error = $('<div class="alert alert-danger with-margin-top"></div>');
+                    $error.html('<b>' + textStatus + '</b>')
+                    $('#no-rxns').before($error);
+                    window.setTimeout(function() {
+                        $('#no-rxns').prev().remove();
+                    }, 5000);
+                    $('#save-rxns').siblings('img').css('display', 'none');
+                }
             });
-            $success = $('<div class="alert alert-success with-margin-top"></div>');
-            $success.html('<b>Saved!</b>')
-            $('#no-rxns').before($success);
-            window.setTimeout(function() {
-                $('#no-rxns').prev().remove();
-            }, 5000);
-            $(this).siblings('img').css('display', 'none');
         }
     });
 

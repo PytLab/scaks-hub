@@ -50,7 +50,7 @@ def save_model():
         # Elementary reactions.
         rxn_content = 'rxn_expressions = [\n'
         for expr in rxn_expressions:
-            rxn_content += '    {},\n'.format(expr)
+            rxn_content += "    '{}',\n".format(expr)
         rxn_content += ']\n\n'
         rxn_filename = '{}/rxns.py'.format(full_path)
         with open(rxn_filename, 'w') as f:
@@ -66,5 +66,5 @@ def save_model():
         with open(energies_filename, 'w') as f:
             f.write(energies_content)
 
-        return 'Data saved', 200
+        return 'Saved', 200
 
