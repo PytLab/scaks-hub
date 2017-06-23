@@ -1,19 +1,18 @@
 <div class="row">
     <div class="row file-buttons">
         <div class="col-xs-12 col-sm-6 col-md-6">
-            <div class="btn-group btn-group-sm with-margin-bottom">
-                <a class="btn btn-success" href="{{ url_for('main.model', path=path) }}"><i class="fa fa-play-circle"></i><b>Create a job</b></a>
-            </div>
+            <a class="btn btn-sm btn-success" href="{{ url_for('main.model', path=path) }}"><i class="fa fa-play-circle"></i><b>New job</b></a>
+            <a class="btn btn-sm btn-primary" href=""><i class="fa fa-folder-open"></i><b>Open</b></a>
         </div>
 
         <div class="col-xs-12 col-sm-6 col-md-6 text-right">
             <div class="btn-group btn-group-sm with-margin-bottom">
-                <button type="button" class="btn btn-default disabled"><i class="fa fa-upload"></i>Upload</button>
-                <button type="button" class="btn btn-default disabled"><i class="fa fa-download"></i>Download</button>
+                <button type="button" class="btn btn-default disabled"><i class="fa fa-upload"></i><b>Upload</b></button>
+                <button type="button" class="btn btn-default disabled"><i class="fa fa-download"></i><b>Download</b></button>
                 <button type="button" class="btn btn-default" id="refresh-file-table">
-                    <i class="fa fa-refresh"></i>Refresh
+                    <i class="fa fa-refresh"></i><b>Refresh</b>
                 </button>
-                <button type="button" class="btn btn-danger disabled"><i class="fa fa-trash"></i>Delete</button>
+                <button type="button" class="btn btn-danger disabled"><i class="fa fa-trash"></i><b>Delete</b></button>
             </div>
         </div>
     </div>

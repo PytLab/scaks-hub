@@ -187,7 +187,12 @@
             });
         } catch(e) {
             if (e.name == 'RxnEquationError') {
-                $('#IS-input, #TS-input, #FS-input').each(function() {
+                if (tsExp == undefined) {
+                    var $inputs = $('#IS-input, #FS-input');
+                } else {
+                    var $inputs = $('#IS-input, #TS-input, #FS-input');
+                }
+                $inputs.each(function() {
                     $(this).form_status({
                         show: true,
                         status: 'error',
