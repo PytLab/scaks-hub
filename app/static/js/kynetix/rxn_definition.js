@@ -17,12 +17,8 @@
             var $Ga = $('#rxn-definition input[name=Ga]');
 
             if (this.id == 'no-barrier') {
-                if ($ts.attr('disabled') == undefined) {
-                    $ts.attr('disabled', true);
-                }
-                if ($Ga.attr('disabled') == undefined) {
-                    $Ga.val('0.0').attr('disabled', true)
-                }
+                $ts.attr('disabled', true);
+                $Ga.attr('disabled', true).val('0.0');
             } else if (this.id == 'with-barrier') {
                 if ($ts.attr('disabled')) {
                     $ts.removeAttr('disabled');
