@@ -104,3 +104,5 @@ ENV/
 *.swp
 
 .DS_Store
+
+temp/

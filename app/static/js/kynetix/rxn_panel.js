@@ -53,16 +53,21 @@
 
     /* Save current rxns */
     $('#save-rxns').on('click.kyn', function() {
-        $(this).siblings('img').css('display', 'inline');
-        if ($('#rxn-table').css('display') == 'none'
-                && $('#no-rxns').css('display') == 'block') {
-            $warn = $('<div class="alert alert-warning with-margin-top"></div>');
-            $warn.html('<b>No reaction can be saved !</b>')
-            $('#no-rxns').before($warn);
+        var showInfo = function(text, style) {
+            var style = style || 'danger'
+            $info = $('<div class="alert alert-' + style + ' with-margin-top"></div>');
+            $info.html('<b>' + text + '</b>');
+            $('#no-rxns').before($info);
             window.setTimeout(function() {
                 $('#no-rxns').prev().remove();
             }, 5000);
-            $(this).siblings('img').css('display', 'none');
+            $('#save-rxns').siblings('img').css('display', 'none');
+        };
+
+        $(this).siblings('img').css('display', 'inline');
+        if ($('#rxn-table').css('display') == 'none'
+                && $('#no-rxns').css('display') == 'block') {
+            showInfo('No reaction, try to add one please!', 'warning');
         } else {
             var rxn_expressions = [];
             var Gas = [], dGs = [];
@@ -77,18 +82,8 @@
                 }
             });
 
-            var showErrorInfo = function(text) {
-                $error = $('<div class="alert alert-danger with-margin-top"></div>');
-                $error.html('<b>' + text + '</b>');
-                $('#no-rxns').before($error);
-                window.setTimeout(function() {
-                    $('#no-rxns').prev().remove();
-                }, 5000);
-                $('#save-rxns').siblings('img').css('display', 'none');
-            };
-
             if (Gas.length < 1 || dGs.length < 1) {
-                showErrorInfo('No reaction is enabled!');
+                showInfo('No reaction is enabled!');
                 return false;
             }
             // Post.
@@ -102,16 +97,10 @@
                     'full_path': $('#full-path').data('full-path')
                 },
                 success: function(data, textStatus) {
-                    $success = $('<div class="alert alert-success with-margin-top"></div>');
-                    $success.html('<b>reactions and energies are saved in current directory!</b>')
-                    $('#no-rxns').before($success);
-                    window.setTimeout(function() {
-                        $('#no-rxns').prev().remove();
-                    }, 5000);
-                    $('#save-rxns').siblings('img').css('display', 'none');
+                    showInfo("Reactions and energies are saved in current directory!", 'success');
                 },
                 error: function(XMLHttpRequest, textStatus) {
-                    showErrorInfo(textStatus);
+                    showInfo(textStatus);
                 }
             });
         }
