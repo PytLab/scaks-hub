@@ -67,13 +67,30 @@
             var rxn_expressions = [];
             var Gas = [], dGs = [];
             $('#rxn-table tbody > tr').each(function() {
-                var expr = $(this).find('td.rxn-expression').text();
-                rxn_expressions.push(expr);
-                var Ga = $(this).find('td.rxn-energies').data('ga');
-                var dG = $(this).find('td.rxn-energies').data('dg');
-                Gas.push(Ga);
-                dGs.push(dG);
+                if (!$(this).hasClass('disabled')) {
+                    var expr = $(this).find('td.rxn-expression').text();
+                    rxn_expressions.push(expr);
+                    var Ga = $(this).find('td.rxn-energies').data('ga');
+                    var dG = $(this).find('td.rxn-energies').data('dg');
+                    Gas.push(Ga);
+                    dGs.push(dG);
+                }
             });
+
+            var showErrorInfo = function(text) {
+                $error = $('<div class="alert alert-danger with-margin-top"></div>');
+                $error.html('<b>' + text + '</b>');
+                $('#no-rxns').before($error);
+                window.setTimeout(function() {
+                    $('#no-rxns').prev().remove();
+                }, 5000);
+                $('#save-rxns').siblings('img').css('display', 'none');
+            };
+
+            if (Gas.length < 1 || dGs.length < 1) {
+                showErrorInfo('No reaction is enabled!');
+                return false;
+            }
             // Post.
             $.ajax({
                 url: '/model/save/',
@@ -94,13 +111,7 @@
                     $('#save-rxns').siblings('img').css('display', 'none');
                 },
                 error: function(XMLHttpRequest, textStatus) {
-                    $error = $('<div class="alert alert-danger with-margin-top"></div>');
-                    $error.html('<b>' + textStatus + '</b>')
-                    $('#no-rxns').before($error);
-                    window.setTimeout(function() {
-                        $('#no-rxns').prev().remove();
-                    }, 5000);
-                    $('#save-rxns').siblings('img').css('display', 'none');
+                    showErrorInfo(textStatus);
                 }
             });
         }
