@@ -6,6 +6,7 @@ import os
 from flask import request, render_template
 
 from . import main
+from . import FILE_HEADER
 from .files import get_links_paths
 
 @main.route('/model/')
@@ -48,7 +49,7 @@ def save_model():
 
         # Write to files.
         # Elementary reactions.
-        rxn_content = 'rxn_expressions = [\n'
+        rxn_content = FILE_HEADER + 'rxn_expressions = [\n'
         for expr in rxn_expressions:
             rxn_content += "    '{}',\n".format(expr)
         rxn_content += ']\n\n'
@@ -57,7 +58,7 @@ def save_model():
             f.write(rxn_content)
 
         # Energies.
-        energies_content = 'Ga, dG = [], []\n'
+        energies_content = FILE_HEADER + 'Ga, dG = [], []\n'
         for rxn, Ga, dG in zip(rxn_expressions, Gas, dGs):
             energies_content += ('\n# {}\n' +
                                  'Ga.append({})\n' +
