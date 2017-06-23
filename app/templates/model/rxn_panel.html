@@ -11,23 +11,27 @@
 			<div class="panel-body">
 				<!-- Reactions buttons -->
 			    <div class="row">
-				    <div class="col-md-6">
+				    <div class="col-sm-6 col-md-6 with-margin-bottom">
 					    <div class="btn-group">
 					    	<button data-toggle="dropdown" class="btn btn-sm btn-success dropdown-toggle" type="button">
-					    	<i class="fa fa-plus"></i>New
+					    	<i class="fa fa-plus"></i><b>New</b>
 					    	</button>
 							<ul class="dropdown-menu">
-                                <li class="dropdown-header">Select a reaction type</li>
+                                <li class="dropdown-header"><b>Select a reaction type</b></li>
                                 <li class="open-rxn-definition" id="no-barrier"><a href="">A <i class="fa fa-long-arrow-right"></i>B</a></li>
 								<li class="open-rxn-definition" id="with-barrier"><a href="">A <i class="fa fa-arrows-h"></i>B <i class="fa fa-long-arrow-right"></i>C</a></li>
 							</ul>
 						</div>
-						<button type="button" id="disable-rxns" class="btn btn-sm btn-warning"><i class="fa fa-ban"></i>Disable</button>
-					    <button type="button" id="recover-rxns" class="btn btn-sm btn-default"><i class="fa fa-check"></i>Recover</button>
-                        <button type="button" id="save-rxns" class="btn btn-sm btn-primary"><i class="fa fa-floppy-o"></i>Save</button>
-					    <button type="button" id="delete-rxns" class="btn btn-sm btn-danger"><i class="fa fa-trash"></i>Delete</button>
+                        <button type="button" id="save-rxns" class="btn btn-sm btn-primary"><i class="fa fa-floppy-o"></i><b>Save</b></button>
                         <img class="with-margin-left" src="/static/img/broken-circle-20x20.gif" alt="Loading" style="display: none">
 				    </div>
+                    <div class="col-sm-6 col-md-6 text-right with-margin-bottom">
+                        <div class="btn-group">
+                            <button type="button" id="disable-rxns" class="btn btn-sm btn-default"><i class="fa fa-ban"></i><b>Disable</b></button>
+                            <button type="button" id="recover-rxns" class="btn btn-sm btn-default"><i class="fa fa-check"></i><b>Recover</b></button>
+                            <button type="button" id="delete-rxns" class="btn btn-sm btn-danger"><i class="fa fa-trash"></i><b>Delete</b></button>
+                        </div>
+                    </div>
 			    </div>
                 {% include "model/rxn_table.html" %}
 

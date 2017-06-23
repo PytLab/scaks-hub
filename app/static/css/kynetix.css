@@ -36,6 +36,11 @@ i {
     .file-buttons .text-right {
         text-align: left;
     }
+
+    /* Rxn table buttons for small screen */
+    #rxn-panel-body .text-right {
+        text-align: left
+    }
 }
 
 /* Model styles */
