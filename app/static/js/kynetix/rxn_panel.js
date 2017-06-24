@@ -117,5 +117,7 @@
         }
     });
 
+    $('#edit-rxn').on('click.kyn', function() {});
+
 })(jQuery);
 

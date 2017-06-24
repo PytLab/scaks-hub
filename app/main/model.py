@@ -4,6 +4,7 @@
 import os
 
 from flask import request, render_template, jsonify
+from kynetix.parsers.rxn_parser import RxnEquation
 
 from . import main
 from . import FILE_HEADER
@@ -24,14 +25,39 @@ def model():
     # Open existing rxns and energies.
     rxns_filename = '{}/rxns.py'.format(full_path)
     energies_filename = '{}/rel_energy.py'.format(full_path)
+
     if (os.path.exists(rxns_filename) and
             os.path.exists(energies_filename)):
         data = {}
         exec(open(rxns_filename, 'r').read(), {}, data)
         exec(open(energies_filename, 'r').read(), {}, data)
-        locs['rxn_info'] = zip(data['rxn_expressions'], data['Ga'], data['dG'])
+        locs['rxn_infos'] = []
+        for i, expr in enumerate(data['rxn_expressions']):
+            r = RxnEquation(expr)
+            states = r.tolist()
+            if len(states) == 3:
+                IS, TS, FS = [s.chem_state() for s in states]
+                rxn_type = 'with-barrier'
+                locs['rxn_infos'].append({'rxn_expression': expr,
+                                         'Ga': data['Ga'][i],
+                                         'dG': data['dG'][i],
+                                         'IS': IS,
+                                         'TS': TS,
+                                         'FS': FS,
+                                         'rxn_type': rxn_type})
+            elif len(states) == 2:
+                IS, FS = [s.chem_state() for s in states]
+                rxn_type = 'no-barrier'
+                locs['rxn_infos'].append({'rxn_expression': expr,
+                                         'Ga': data['Ga'][i],
+                                         'dG': data['dG'][i],
+                                         'IS': IS,
+                                         'FS': FS,
+                                         'rxn_type': rxn_type})
+            else:
+                raise ValueError('Invalid reaction expression: {}'.format(expr))
     else:
-        locs['rxn_info'] = []
+        locs['rxn_infos'] = []
 
     return render_template('model/model.html', **locs)
 

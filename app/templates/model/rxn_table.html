@@ -1,5 +1,5 @@
 <!-- Reactions -->
-{% if rxn_info %}
+{% if rxn_infos %}
 <div class="row" id="no-rxns" style="display: none">
 {% else %}
 <div class="row" id="no-rxns" style="display: block">
@@ -13,7 +13,7 @@
     </div>
 </div>
 
-{% if rxn_info %}
+{% if rxn_infos %}
 <div class="row" id="rxn-table" style="display: block">
 {% else %}
 <div class="row" id="rxn-table" style="display: none">
@@ -27,12 +27,20 @@
 	        </tr>
         </thead>
         <tbody>
-        {% for expr, Ga, dG in rxn_info %}
-            <tr>
+        {% for rxn_info in rxn_infos %}
+            <tr data-rxn-type="{{ rxn_info['rxn_type'] }}">
                 <td><input type="checkbox"></td>
-                <td class="rxn-expression">{{ expr }}</td>
-                <td class="rxn-energies" data-Ga="{{ Ga }}" data-dG="{{ dG }}">
-                    ({{ Ga }}, {{ dG }})
+                {% if rxn_info['rxn_type'] == 'with-barrier' %}
+                <td class="rxn-expression" data-is="{{ rxn_info['IS'] }}" data-ts="{{ rxn_info['TS'] }}" data-fs="{{ rxn_info['FS']}}">
+                {{ rxn_info['rxn_expression'] }}
+                </td>
+                {% elif rxn_info['rxn_type'] == 'no-barrier' %}
+                <td class="rxn-expression" data-is="{{ rxn_info['IS'] }}" data-fs="{{ rxn_info['FS']}}">
+                {{ rxn_info['rxn_expression'] }}
+                </td>
+                {% endif %}
+                <td class="rxn-energies" data-Ga="{{ rxn_info['Ga'] }}" data-dG="{{ rxn_info['dG'] }}">
+                ({{ rxn_info['Ga'] }}, {{ rxn_info['dG'] }})
                 </td>
             </tr>
         {% endfor %}

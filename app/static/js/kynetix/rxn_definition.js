@@ -325,17 +325,30 @@
             var $checkbox = $('<td><input type="checkbox"></td>');
             $row.append($checkbox);
 
+            // rxn expression
+            var $expression = $('<td class="rxn-expression"></td>')
             if (ts) {
-                var expression = is + " <-> " + ts + ' -> ' + fs;
+                $row.attr('data-rxn-type', 'with-barrier');
+                $expression.attr('data-is', is)
+                .attr('data-ts', ts)
+                .attr('data-fs', fs)
+                .text(is + ' <-> ' + ts + ' -> ' + fs);
             } else {
-                var expression = is + ' -> ' + fs;
+                $row.attr('data-rxn-type', 'no-barrier');
+                $expression.attr('data-is', is)
+                .attr('data-fs', fs)
+                .text(is + ' -> ' + fs);
             }
-            $row.append($('<td class="rxn-expression">' + expression + '</td>'));
+            $row.append($expression);
 
             Ga = parseFloat(Ga);
             dG = parseFloat(dG);
-            $row.append($('<td class="rxn-energies" data-Ga="' + Ga + '" data-dG="' + dG + '">('
-                          + Ga.toFixed(1) + ', ' + dG.toFixed(1) + ')</td>'));
+            var $energies = $('<td class="rxn-energies">('
+                              + Ga.toFixed(1) + ', '
+                              + dG.toFixed(1) + ')</td>');
+            $energies.attr('Ga', Ga.toFixed(1))
+            .attr('dG', dG.toFixed(1));
+            $row.append($energies);
             return $row;
         })(is, ts, fs, Ga, dG);
 
