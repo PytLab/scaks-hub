@@ -134,7 +134,7 @@
     /* Save current rxns */
     $('#save-rxns').on('click.kyn', function() {
         var showInfo = function(text, style) {
-            var style = style || 'danger'
+            var style = style || 'danger';
             $info = $('<div class="alert alert-' + style + ' with-margin-top"></div>');
             $info.html('<b>' + text + '</b>');
             $('#no-rxns').before($info);

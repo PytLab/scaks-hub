@@ -39,7 +39,7 @@ i {
 
     /* Rxn table buttons for small screen */
     #rxn-panel-body .text-right {
-        text-align: left
+        text-align: left;
     }
 }
 
@@ -85,4 +85,9 @@ i {
 #rxn-panel-body .dropdown-menu > li,
 #rxn-definition .modal-body .input-group {
     font-family: "Courier New", consola;
+}
+
+/* Model form */
+#species-properties span, input {
+    font-family: "Courier New", "Consolas";
 }

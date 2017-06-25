@@ -1,16 +1,16 @@
-<div class="with-margin-top">
+<div id="model-form" class="row with-margin-top">
     <div class="col-md-6">
     </div>
-    <div class="col-md-6">
-        <div class="input-group with-margin-top">
-            <span class="input-group-addon">CO_g</span>
-            <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)">
-            <span class="input-group-addon">Bar</span>
-        </div>
-        <div class="input-group with-margin-top">
-            <span class="input-group-addon">CO_g</span>
-            <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)">
-            <span class="input-group-addon">Bar</span>
+    <div id="species-properties" class="col-md-6">
+        <div class="row">
+            <div class="col-md-12 with-margin-top">
+                <div id="no-species-form" class="well text-center embeded-charactors">
+                    No species information, press <b><i class="fa fa-refresh"></i>Load species info</b> button to load them
+                </div>
+                <div id="loading-species-form" class="well text-center embeded-charactors" style="display: none">
+                    <img src="/static/img/broken-circle.gif" alt="Loading">
+                </div>
+            </div>
         </div>
     </div>
 </div>
