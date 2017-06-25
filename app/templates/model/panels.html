@@ -1,0 +1,41 @@
+<div class="row">
+    <!-- store path info -->
+    <div id="full-path" data-full-path="{{ full_path }}"></div>
+	<div class="panel panel-default">
+		<div class="panel-heading" data-toggle="collapse" data-target="#rxn-panel-body">
+            <div class="embeded-charactors">
+                <i class="fa fa-arrow-circle-o-down rotate-icon"></i>Reaction Definition
+            </div>
+		</div>
+		<div id="rxn-panel-body" class="panel-collapse collapse in">
+			<div class="panel-body">
+                {% include "model/rxn_buttons.html" %}
+                {% include "model/rxn_table.html" %}
+
+                <!-- Loading animation -->
+                <div class="text-center loading">
+	                <img src="/static/img/broken-circle.gif" alt="Loading..." style="display:none">
+                </div>
+			</div>
+		</div>
+	</div>
+	{% include "model/rxn_definition.html" %}
+
+	<div class="panel panel-default">
+		<div class="panel-heading" data-toggle="collapse" data-target="#model-panel-body">
+            <div class="embeded-charactors">
+                <i class="fa fa-arrow-circle-o-down rotate-icon"></i>Kinetic Model Definition
+            </div>
+		</div>
+		<div id="model-panel-body" class="panel-collapse collapse in">
+			<div class="panel-body">
+                {% include "model/model_buttons.html" %}
+                {% include "model/model_form.html" %}
+                <!-- Loading animation -->
+            </div>
+            <div class="panel-body text-center">
+                <img src="/static/img/broken-circle.gif" alt="Loading..." style="display:none">
+			</div>
+		</div>
+	</div>
+</div>
