@@ -4,36 +4,6 @@
     "use restrice";
     /* Reaction definition modal */
 
-    // Open rxn definition modal.
-    $('.open-rxn-definition').each(function() {
-
-        $(this).on('click.kyn', function(event) {
-            event.preventDefault();
-
-            // Hide modify button and add add button
-            $('#modify-rxn-definition').css('display', 'none');
-            $('#add-to-rxn-table').css('display', 'inline');
-
-            var options = {backdrop: 'static', show: true};
-            $('#rxn-definition').modal(options);
-
-            var $ts = $('#rxn-definition input[name=TS]');
-            var $Ga = $('#rxn-definition input[name=Ga]');
-
-            if (this.id == 'no-barrier') {
-                $ts.attr('disabled', true);
-                $Ga.attr('disabled', true).val('0.0');
-            } else if (this.id == 'with-barrier') {
-                if ($ts.attr('disabled')) {
-                    $ts.removeAttr('disabled');
-                }
-                if ($Ga.attr('disabled')) {
-                    $Ga.removeAttr('disabled').val('');
-                }
-            }
-        });
-    });
-
     var clearRxnDefinition = function() {
         $('#rxn-definition form input').val('');
         // Remove all form statu info.
@@ -338,51 +308,6 @@
         $row.append($energies);
         return $row;
     };
-
-    // Edit a rxn definition.
-    $('#edit-rxn').on('click.kyn', function() {
-        // Hide add button and display modify button.
-        $('#rxn-definition #modify-rxn-definition').css('display', 'inline');
-        $('#rxn-definition #add-to-rxn-table').css('display', 'none');
-
-        var options = {backdrop: 'static', show: true};
-        $('#rxn-definition').modal(options);
-
-        var $is = $('#rxn-definition input[name=IS]');
-        var $ts = $('#rxn-definition input[name=TS]');
-        var $fs = $('#rxn-definition input[name=FS]');
-        var $Ga = $('#rxn-definition input[name=Ga]');
-        var $dG = $('#rxn-definition input[name=dG]');
-
-        $tr = $('#rxn-table input:checkbox:checked:first').parents('tr');
-        if ($tr.data('rxn-type') == 'no-barrier') {
-            $ts.attr('disabled', true);
-            $Ga.attr('disabled', true).val('0.0');
-
-            // Fill fields.
-            var $expr = $tr.children('td.rxn-expression');
-            $is.val($expr.data('is'));
-            $fs.val($expr.data('fs'));
-            var $energies = $tr.children('td.rxn-energies');
-            $dG.val($energies.data('dg'));
-        } else if ($tr.data('rxn-type') == 'with-barrier') {
-            if ($ts.attr('disabled')) {
-                $ts.removeAttr('disabled');
-            }
-            if ($Ga.attr('disabled')) {
-                $Ga.removeAttr('disabled').val('');
-            }
-
-            // Fill fields.
-            var $expr = $tr.children('td.rxn-expression');
-            $is.val($expr.data('is'));
-            $ts.val($expr.data('ts'));
-            $fs.val($expr.data('fs'));
-            var $energies = $tr.children('td.rxn-energies');
-            $Ga.val($energies.data('ga'));
-            $dG.val($energies.data('dg'));
-        }
-    });
 
     $('#modify-rxn-definition').on('click.kyn', function() {
         // Check inputs firstly.
