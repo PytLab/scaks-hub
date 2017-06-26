@@ -235,4 +235,48 @@
         }
     };
     $('#model-param-form input[name=max-iteration]').on('blur.kyn', checkMaxIteration);
+
+    /* Check tolerance */
+    var checkTolerance = function() {
+        $tolerance = $('#model-param-form input[name=tolerance]');
+        $inputGroup = $tolerance.parent('.input-group');
+        value = $tolerance.val();
+
+        if (!value) {
+            $inputGroup.form_status({
+                show: true,
+                status: 'warning',
+                msg: 'Please enter the convergence criterion'
+            });
+            return false;
+        } else if (isNaN(value)) {
+            $inputGroup.form_status({
+                show: true,
+                status: 'error',
+                msg: ''
+                    + '<span style="font-family: Courier New, Consolas">'
+                    + value + '</span>'
+                    + ' is not an number !'
+            });
+            return false;
+        } else if (value > 1e-5) {
+            $inputGroup.form_status({
+                show: true,
+                status: 'error',
+                msg: ''
+                    + 'tolerance should be smaller than '
+                    + '<span style="font-family: Courier New, Consolas">'
+                    + '1e-5</span> !'
+            });
+        } else {
+            $inputGroup.form_status({
+                show: true,
+                status: 'success',
+                msg: ''
+            });
+
+            return true;
+        }
+    };
+    $('#model-param-form input[name=tolerance]').on('blur.kyn', checkTolerance);
 })(jQuery);
