@@ -202,4 +202,37 @@
     };
     $('#model-param-form input[name=temperature]').on('blur.kyn', checkTemperature);
 
+    /* Check max iteration */
+    var checkMaxIteration = function() {
+        $maxIter = $('#model-param-form input[name=max-iteration]');
+        $inputGroup = $maxIter.parent('.input-group');
+        value = $maxIter.val();
+        if (!value) {
+            $inputGroup.form_status({
+                show: true,
+                status: 'warning',
+                msg: 'Please enter the max iteration step'
+            });
+            return false;
+        } else if (isNaN(value) || value.indexOf('.') != -1 || value <= 0) {
+            $inputGroup.form_status({
+                show: true,
+                status: 'error',
+                msg: ''
+                    + '<span style="font-family: Courier New, Consolas">'
+                    + value + '</span>'
+                    + ' is not an positive integer!'
+            });
+            return false;
+        } else {
+            $inputGroup.form_status({
+                show: true,
+                status: 'success',
+                msg: ''
+            });
+
+            return true;
+        }
+    };
+    $('#model-param-form input[name=max-iteration]').on('blur.kyn', checkMaxIteration);
 })(jQuery);
