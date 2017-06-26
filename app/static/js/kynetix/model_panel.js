@@ -151,4 +151,55 @@
             });
         });
     };
+
+    /* Check model parameter form */
+
+    /* Check temperature input */
+    var checkTemperature = function() {
+        // Here this should be the temperature input element.
+        $temperature = $('#model-param-form input[name=temperature]');
+        $inputGroup = $temperature.parent('.input-group');
+        $inputGroup.form_status({ remove: true });
+        var value = $temperature.val();
+        if (!value) {
+            $inputGroup.form_status({
+                show: true,
+                status: 'warning',
+                msg: 'Please enter a temperature'
+            });
+            return false;
+        } else if (isNaN(value)) {
+            $inputGroup.form_status({
+                show: true,
+                status: 'error',
+                msg: ''
+                    + '<span style="font-family: Courier New, Consolas">'
+                    + value + '</span>'
+                    + ' is not a number !'
+            });
+            return false;
+        } else if (value < -273.15) {
+            $inputGroup.form_status({
+                show: true,
+                status: 'error',
+                msg: ''
+                    + '<span style="font-family: Courier New, Consolas">'
+                    + value + '</span>'
+                    + ' out of range '
+                    + '<span style="font-family: Courier New, Consolas">'
+                    + '[-273.15, &infin;)</span> !'
+            });
+            return false;
+        } else {
+            $inputGroup.form_status({
+                show: true,
+                status: 'success',
+                msg: ''
+            });
+
+            return true;
+        }
+    };
+    $('#model-param-form input[name=temperature]').on('blur.kyn', checkTemperature);
+
 })(jQuery);
