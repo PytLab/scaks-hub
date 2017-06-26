@@ -2,7 +2,7 @@
     /* Load species information form */
     var getPressureInput = function(gas) {
         var inputHtml = ''
-            + '<div class="input-group with-margin-top">'
+            + '<div class="pressure-input input-group with-margin-bottom">'
             + '<span class="input-group-addon">P<sub>(' + gas + ')</sub></span>'
             + '<input type="text" class="form-control"'
             + 'placeholder="' + gas + ' pressure">'
@@ -13,7 +13,7 @@
 
     var getTotalCvgInput = function(site) {
         var inputHtml = ''
-            + '<div class="input-group with-margin-top">'
+            + '<div class="site-cvg-input input-group with-margin-bottom">'
             + '<span class="input-group-addon">Total &theta;<sub>(' + site + ')</sub></span>'
             + '<input type="text" class="form-control"'
             + 'placeholder="' + site + ' total coverage">'
@@ -91,5 +91,64 @@
         }
 
         $('#species-form').css('display', 'block');
+
+        // Bind check functions to inputs.
+        bindCheckFunc.call($('#species-form input'));
     });
+
+    /* Species form check function binding callback */
+    var bindCheckFunc = function() {
+        this.each(function() {
+            $(this).on('blur.kyn', function() {
+                $this = $(this);
+                $inputGroup = $this.parent('.input-group');
+                $inputGroup.form_status({ remove: true });
+                var value = $this.val();
+
+                // Check if there is no value input
+                if (!value) {
+                    $inputGroup.form_status({
+                        show: true,
+                        status: 'warning',
+                        msg: 'Please input your data !'
+                    });
+                    return false;
+                }
+
+                // Check value validity
+                if (isNaN(value) || parseFloat(value) <= 0.0) {
+                    $inputGroup.form_status({
+                        show: true,
+                        status: 'error',
+                        msg: ''
+                            + '<span style="font-family: Courier New, Consolas">'
+                            + value + '</span> is not a valid data !'
+                    });
+                    return false;
+                }
+
+                if ($inputGroup.hasClass('site-cvg-input')) {
+                    if (parseFloat(value) > 1.0) {
+                        $inputGroup.form_status({
+                            show: true,
+                            status: 'error',
+                            msg: ''
+                                + 'Coverage out of range '
+                                + '<span style="font-family: Courier New, Consolas">'
+                                + '[0.0 ~ 1.0]</span> !'
+                        });
+                        return false;
+                    }
+                }
+
+                $inputGroup.form_status({
+                    show: true,
+                    status: 'success',
+                    msg: ''
+                });
+
+                return true;
+            });
+        });
+    };
 })(jQuery);
