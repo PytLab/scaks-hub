@@ -88,6 +88,6 @@ i {
 }
 
 /* Model form */
-#species-properties span, input {
+#model-form span, input, select, option {
     font-family: "Courier New", "Consolas";
 }
