@@ -70,7 +70,6 @@
         }
         // Show loading animation
         $('#no-species-form').css('display', 'none');
-        $('#loading-species-form').css('display', 'block');
 
         // Load species form
         $('#species-form').empty();
@@ -91,7 +90,6 @@
             $('#species-form').append($totalCvgInput);
         }
 
-        $('#loading-species-form').css('display', 'none');
         $('#species-form').css('display', 'block');
     });
 })(jQuery);
