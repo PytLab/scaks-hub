@@ -292,4 +292,10 @@
         });
     };
     $('#reset-model').on('click.kyn', clearModelForm);
+
+    // Load species form automatically.
+    var $availRxns = $('#rxn-table tbody > tr').not('.disabled');
+    if ($availRxns.length > 0) {
+        $('#load-species-form').trigger('click.kyn');
+    }
 })(jQuery);
