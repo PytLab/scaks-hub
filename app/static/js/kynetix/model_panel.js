@@ -99,6 +99,11 @@
         });
     });
 
+    // Bind check callback functions to species inputs
+    $('#species-form input').each(function() {
+        $(this).on('blur.kyn', checkSpeciesInput);
+    });
+
     /* Species form check function binding callback */
     var checkSpeciesInput = function() {
         $this = $(this);

@@ -5,29 +5,61 @@
                 <div id="model-param-form">
                     <div class="input-group with-margin-bottom">
                         <span class="input-group-addon">T</span>
+                        {% if model_info and model_info.get('temperature') %}
+                        <input type="text" name="temperature" value="{{model_info['temperature']}}" class="form-control" placeholder="Temperature">
+                        {% else %}
                         <input type="text" name="temperature" class="form-control" placeholder="Temperature">
+                        {% endif %}
                         <span class="input-group-addon">K</span>
                     </div>
                     <div class="input-group with-margin-bottom">
                         <span class="input-group-addon">Max Iteration</span>
+                        {% if model_info and model_info.get('max_iteration') %}
+                        <input type="text" name="max-iteration" value="{{ model_info.get('max_iteration') }}" class="form-control" placeholder="Max iteration step">
+                        {% else %}
                         <input type="text" name="max-iteration" class="form-control" placeholder="Max iteration step" value="100">
+                        {% endif %}
                     </div>
                     <div class="input-group with-margin-bottom">
                         <span class="input-group-addon">Tolerance</span>
+                        {% if model_info and model_info.get('tolerance') %}
+                        <input type="text" name="tolerance" class="form-control" placeholder="Convergence Criterion" value="{{ model_info.get('tolerance') }}">
+                        {% else %}
                         <input type="text" name="tolerance" class="form-control" placeholder="Convergence Criterion" value="1e-50">
+                        {% endif %}
                     </div>
                     <div class="input-group with-margin-bottom">
                         <span class="input-group-addon">Rate Theory</span>
                         <select name="rate-algo" class="form-control">
+                        {% if model_info and model_info.get('rate_algo') %}
+                            {% if model_info.get('rate_algo') == 'CT' %}
+                            <option value="TST">Transtion State Theory</option>
+                            <option value="CT" selected>Collision Theory</option>
+                            {% else %}
                             <option value="TST" selected>Transtion State Theory</option>
                             <option value="CT">Collision Theory</option>
+                            {% endif %}
+                        {% else %}
+                            <option value="TST" selected>Transtion State Theory</option>
+                            <option value="CT">Collision Theory</option>
+                        {% endif %}
                         </select>
                     </div>
                     <div class="input-group with-margin-bottom">
                         <span class="input-group-addon">RootFinding</span>
                         <select name="root-finding" class="form-control">
+                        {% if model_info and model_info.get('rootfinding') %}
+                            {% if model_info.get('rootfinding') == 'ConstrainedNewton' %}
+                            <option value="MDNewton">MD Newton</option>
+                            <option value="ConstrainedNewton" selected>Constrained Newton</option>
+                            {% else %}
                             <option value="MDNewton" selected>MD Newton</option>
                             <option value="ConstrainedNewton">Constrained Newton</option>
+                            {% endif %}
+                        {% else %}
+                            <option value="MDNewton" selected>MD Newton</option>
+                            <option value="ConstrainedNewton">Constrained Newton</option>
+                        {% endif %}
                         </select>
                     </div>
                 </div>

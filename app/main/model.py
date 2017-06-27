@@ -60,6 +60,22 @@ def model():
     else:
         locs['rxn_infos'] = []
 
+    # Open existing model.
+    model_filename = '{}/model.py'.format(full_path)
+    if os.path.exists(model_filename):
+        data = {}
+        exec(open(model_filename, 'r').read(), {}, data)
+        model_info = {}
+
+        model_info.setdefault('temperature', data.get('temperature'))
+        model_info.setdefault('rate_algo', data.get('rate_algo'))
+        model_info.setdefault('rootfinding', data.get('rootfinding'))
+        model_info.setdefault('tolerance', data.get('tolerance'))
+        model_info.setdefault('max_iteration', data.get('max_rootfinding_iterations'))
+        locs['model_info'] = model_info
+    else:
+        locs['model_info'] = {}
+
     return render_template('model/model.html', **locs)
 
 @main.route('/model/save_rxns/', methods=['POST'])
