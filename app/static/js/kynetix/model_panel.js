@@ -279,4 +279,17 @@
         }
     };
     $('#model-param-form input[name=tolerance]').on('blur.kyn', checkTolerance);
+
+    /* Reset all fields */
+    var clearModelForm = function() {
+        $('#model-form input').each(function() {
+            $(this).parent('.input-group').form_status({ remove: true });
+            $(this).val('');
+
+            // Select fields.
+            $('#model-form select[name=rate-algo]').val('TST');
+            $('#model-form select[name=root-finding]').val('MDNewton');
+        });
+    };
+    $('#reset-model').on('click.kyn', clearModelForm);
 })(jQuery);
