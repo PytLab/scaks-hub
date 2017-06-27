@@ -168,7 +168,7 @@
             }
             // Post.
             $.ajax({
-                url: '/model/save/',
+                url: '/model/save_rxns/',
                 type: 'POST',
                 data: {
                     'rxn_expressions': rxn_expressions.toString(),

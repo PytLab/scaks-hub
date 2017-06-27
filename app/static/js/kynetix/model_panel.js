@@ -4,18 +4,19 @@
         var inputHtml = ''
             + '<div class="pressure-input input-group with-margin-bottom">'
             + '<span class="input-group-addon">P<sub>(' + gas + ')</sub></span>'
-            + '<input type="text" class="form-control"'
+            + '<input type="text" name="' + gas + '" class="form-control"'
             + 'placeholder="' + gas + ' pressure">'
             + '<span class="input-group-addon">bar</span>'
             + '</div>';
-        return $(inputHtml);
+        $inputHtml = $(inputHtml);
+        return $inputHtml;
     };
 
     var getTotalCvgInput = function(site) {
         var inputHtml = ''
             + '<div class="site-cvg-input input-group with-margin-bottom">'
             + '<span class="input-group-addon">Total &theta;<sub>(' + site + ')</sub></span>'
-            + '<input type="text" class="form-control"'
+            + '<input type="text" name="' + site + '" class="form-control"'
             + 'placeholder="' + site + ' total coverage">'
             + '</div>';
         $inputHtml = $(inputHtml);
@@ -93,63 +94,71 @@
         $('#species-form').css('display', 'block');
 
         // Bind check functions to inputs.
-        bindCheckFunc.call($('#species-form input'));
+        $('#species-form input').each(function() {
+            $(this).on('blur.kyn', checkSpeciesInput);
+        });
     });
 
     /* Species form check function binding callback */
-    var bindCheckFunc = function() {
-        this.each(function() {
-            $(this).on('blur.kyn', function() {
-                $this = $(this);
-                $inputGroup = $this.parent('.input-group');
-                $inputGroup.form_status({ remove: true });
-                var value = $this.val();
+    var checkSpeciesInput = function() {
+        $this = $(this);
+        $inputGroup = $this.parent('.input-group');
+        $inputGroup.form_status({ remove: true });
+        var value = $this.val();
 
-                // Check if there is no value input
-                if (!value) {
-                    $inputGroup.form_status({
-                        show: true,
-                        status: 'warning',
-                        msg: 'Please input your data !'
-                    });
-                    return false;
-                }
+        // Check if there is no value input
+        if (!value) {
+            $inputGroup.form_status({
+                show: true,
+                status: 'warning',
+                msg: 'Please input your data !'
+            });
+            return false;
+        }
 
-                // Check value validity
-                if (isNaN(value) || parseFloat(value) <= 0.0) {
-                    $inputGroup.form_status({
-                        show: true,
-                        status: 'error',
-                        msg: ''
-                            + '<span style="font-family: Courier New, Consolas">'
-                            + value + '</span> is not a valid data !'
-                    });
-                    return false;
-                }
+        // Check value validity
+        if (isNaN(value) || parseFloat(value) <= 0.0) {
+            $inputGroup.form_status({
+                show: true,
+                status: 'error',
+                msg: ''
+                    + '<span style="font-family: Courier New, Consolas">'
+                    + value + '</span> is not a valid data !'
+            });
+            return false;
+        }
 
-                if ($inputGroup.hasClass('site-cvg-input')) {
-                    if (parseFloat(value) > 1.0) {
-                        $inputGroup.form_status({
-                            show: true,
-                            status: 'error',
-                            msg: ''
-                                + 'Coverage out of range '
-                                + '<span style="font-family: Courier New, Consolas">'
-                                + '[0.0 ~ 1.0]</span> !'
-                        });
-                        return false;
-                    }
-                }
-
+        if ($inputGroup.hasClass('site-cvg-input')) {
+            if (parseFloat(value) > 1.0) {
                 $inputGroup.form_status({
                     show: true,
-                    status: 'success',
+                    status: 'error',
                     msg: ''
+                        + 'Coverage out of range '
+                        + '<span style="font-family: Courier New, Consolas">'
+                        + '[0.0 ~ 1.0]</span> !'
                 });
+                return false;
+            }
+        }
 
-                return true;
-            });
+        $inputGroup.form_status({
+            show: true,
+            status: 'success',
+            msg: ''
         });
+
+        return true;
+    }
+
+    var checkAllSpeciesInputs = function() {
+        $speciesInputs = $('#species-form input');
+        for (var i = 0; i < $speciesInputs.length; i++) {
+            if (!checkSpeciesInput.call($speciesInputs[i])) {
+                return false;
+            }
+        }
+        return true;
     };
 
     /* Check model parameter form */
@@ -292,6 +301,62 @@
         });
     };
     $('#reset-model').on('click.kyn', clearModelForm);
+
+    /* Save the model */
+    $('#save-model').on('click.kyn', function() {
+        $('#model-btns img').css('display', 'inline');
+        if (!(checkTemperature()
+                && checkTolerance()
+                && checkMaxIteration()
+                && checkAllSpeciesInputs())) {
+            showAlertInfo('Please input valid model paramters !', 'danger');
+            $('#model-btns img').css('display', 'none');
+            return false;
+        }
+
+        // Collect data in form
+        $pressure = $('#species-form .pressure-input input');
+        var pressures = [];
+        $pressure.each(function() {
+            pressures.push({
+                name: $(this).attr('name'),
+                pressure: $(this).val()
+            });
+        });
+
+        $coverages = $('#species-form .site-cvg-input input');
+        var coverages = [];
+        $coverages.each(function() {
+            coverages.push({
+                name: $(this).attr('name'),
+                coverage: $(this).val()
+            });
+        });
+
+        var modelData = new Object();
+        modelData.pressures = pressures;
+        modelData.total_cvgs = coverages;
+        modelData.temperature = $('#model-param-form input[name=temperature]').val();
+        modelData.max_iteration = $('#model-param-form input[name=max-iteration]').val();
+        modelData.tolerance = $('#model-param-form input[name=tolerance]').val();
+        modelData.rate_algo = $('#model-param-form select[name=rate-algo]').val();
+        modelData.root_finding = $('#model-param-form select[name=root-finding]').val();
+        modelData.full_path = $('#full-path').data('full-path');
+
+        // Send data using ajax
+        $.ajax({
+            url: '/model/save_model/',
+            type: 'POST',
+            data: JSON.stringify(modelData),
+            success: function(data, textStatus) {
+                showAlertInfo('Model has been saved in current directory', 'success');
+            },
+            error: function(XMLHttpRequest, textStatus) {
+                showAlertInfo(textStatus);
+            }
+        });
+        $('#model-btns img').css('display', 'none');
+    });
 
     // Load species form automatically.
     var $availRxns = $('#rxn-table tbody > tr').not('.disabled');

@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 
 import os
+import json
 
 from flask import request, render_template, jsonify
 from kynetix.parsers.rxn_parser import RxnEquation
@@ -61,8 +62,8 @@ def model():
 
     return render_template('model/model.html', **locs)
 
-@main.route('/model/save/', methods=['POST'])
-def save_model():
+@main.route('/model/save_rxns/', methods=['POST'])
+def save_rxns():
     # All rxn-related data posted are python string.
     rxn_expressions = request.form.get('rxn_expressions')
     if ',' in rxn_expressions:
@@ -104,6 +105,52 @@ def save_model():
     energies_filename = '{}/rel_energy.py'.format(full_path)
     with open(energies_filename, 'w') as f:
         f.write(energies_content)
+
+    return 'Saved', 200
+
+@main.route('/model/save_model/', methods=['POST'])
+def save_model():
+    model_data = json.loads(request.get_data().decode('utf-8'))
+
+    pressures = {}
+    for p in model_data.get('pressures'):
+        pressures.setdefault(p['name'], float(p['pressure']))
+
+    total_cvgs = {}
+    for c in model_data.get('total_cvgs'):
+        total_cvgs.setdefault(c['name'], float(c['coverage']))
+
+    temperature = float(model_data.get('temperature'))
+    tolerance = float(model_data.get('tolerance'))
+    max_rootfinding_iterations = int(model_data.get('max_iteration'))
+    rate_algo = model_data.get('rate_algo')
+    rootfinding = model_data.get('root_finding')
+    full_path = model_data.get('full_path')
+
+    # Write to file.
+    model_content = (FILE_HEADER + '# Gas pressure.\nspecies_definitions = {}\n')
+    for gas, pressure in pressures.items():
+        template = "species_definitions['{}'] = {{'pressure': {}}}\n"
+        model_content += template.format(gas, pressure)
+
+    model_content += '\n# Site info.\n'
+    for site, cvg in total_cvgs.items():
+        template = "species_definitions['{}'] = {{'type': 'site', 'total': {}}}\n"
+        model_content += template.format(site, cvg)
+
+    model_content += '\n#Temperature.\ntemperature = {}  # K\n'.format(temperature)
+    model_content += ("\nparser = 'RelativeEnergyParser'\n" +
+                      "solver = 'SteadyStateSolver'\n" +
+                      "corrector = 'ThermodynamicCorrector'\n" +
+                      "plotter = 'EnergyProfilePlotter'\n")
+    model_content += "\nrate_algo = '{}'\n".format(rate_algo)
+    model_content += "rootfinding = '{}'\n".format(rootfinding)
+    model_content += "tolerance = {:e}\n".format(tolerance)
+    model_content += "max_rootfinding_iterations = {}\n".format(max_rootfinding_iterations)
+
+    filename = "{}/model.py".format(full_path)
+    with open(filename, 'w') as f:
+        f.write(model_content)
 
     return 'Saved', 200
 
