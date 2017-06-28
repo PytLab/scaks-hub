@@ -197,7 +197,64 @@
         }
     });
 
-    $('#edit-rxn').on('click.kyn', function() {});
+    /* Open energy profile modal */
+    $('#open-energy-profile').on('click.kyn', function() {
+        // Check the selected reactions
+        var $tr = $($('#rxn-table input:checkbox:checked')
+            .parents('tr')
+            .get()
+            .reverse());
+        if ($tr.length < 1) {
+            return false;
+        }
+
+        // Collect energy data.
+        var energies = [0.0];
+        var offset = 0.0;
+        $tr.each(function() {
+            var $energies = $(this).children('.rxn-energies');
+            var Ga = $energies.data('ga');
+            var dG = $energies.data('dg');
+            if (Ga == 0.0) {
+                energies.push(offset, dG + offset);
+            } else {
+                energies.push(offset, Ga + offset, dG + offset);
+            }
+            offset += dG;
+        });
+        energies.push(offset);
+
+        // Chart options.
+        var options = {
+            title: {
+                text: null
+            },
+            credits: {
+                enabled: false
+            },
+            xAxis: {
+                title: {
+                    text: 'Reaction Coordinate'
+                },
+                labels: {
+                    enabled: false
+                },
+                gridLineWidth: 1,
+            },
+            yAxis: {
+                title: {
+                    text: 'Relative Energy (eV)'
+                },
+            },
+            series: [{
+                type: 'spline',
+                name: 'energy',
+                data: energies
+            }]
+        };
+        var chart = new Highcharts.Chart('energy-profile-container', options);
+
+        $('#energy-profile').modal('show');
+    });
 
 })(jQuery);
-
