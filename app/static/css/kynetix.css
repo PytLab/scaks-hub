@@ -73,7 +73,7 @@ i {
 
 #rxn-table tbody > tr > td:nth-child(2),
 #rxn-table tbody > tr > td:nth-child(3) {
-    font-family: Courier New, consola;
+    font-family: Courier New, Consolas;
 }
 
 #rxn-table tbody > tr.disabled {
@@ -82,9 +82,9 @@ i {
 }
 
 /* Reaction definition modal */
-#rxn-panel-body .dropdown-menu > li,
+#rxn-panel-body .dropdown-menu > li.open-rxn-definition,
 #rxn-definition .modal-body .input-group {
-    font-family: "Courier New", consola;
+    font-family: "Courier New", Consolas;
 }
 
 /* Model form */

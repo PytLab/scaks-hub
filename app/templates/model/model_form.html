@@ -75,7 +75,7 @@
                     <div class="pressure-input input-group with-margin-bottom">
                         <span class="input-group-addon" data-toggle="tooltip" data-original-title="{{ gas }} pressure">P<sub>({{ gas }})</sub></span>
                         <input type="text" name="{{ gas }}" class="form-control" placeholder="{{ gas }} pressure" value="{{ pressure }}">
-                        <span class="input-group-addon">bar</span>
+                        <span class="input-group-addon" data-toggle="tooltip" data-original-title="Atmospheric pressure">bar</span>
                     </div>
                     {% endfor %}
                     {% for site, cvg in model_info.get('site_total_cvgs') %}
@@ -87,7 +87,7 @@
                 </div>
                 {% else %}
                 <div id="no-species-form" class="well text-center embeded-charactors">
-                    No species information, press <b><i class="fa fa-refresh"></i>Load species info</b> button to load them
+                    No species information, press <b><i class="fa fa-refresh"></i>Load</b> button to load them
                 </div>
                 <div id="species-form" style="display: none">
                 </div>

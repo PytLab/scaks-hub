@@ -15,6 +15,9 @@
         $inputHtml.children('span:first')
             .attr('data-toggle', 'tooltip')
             .attr('data-original-title', gas + ' pressure');
+        $inputHtml.children('span:last')
+            .attr('data-toggle', 'tooltip')
+            .attr('data-original-title', 'Atmospheric pressure');
         return $inputHtml;
     };
 
