@@ -4,16 +4,16 @@
             <div class="col-md-12">
                 <div id="model-param-form">
                     <div class="input-group with-margin-bottom">
-                        <span class="input-group-addon">T</span>
+                        <span class="input-group-addon" data-toggle="tooltip" data-original-title="Reaction temperature">T</span>
                         {% if model_info and model_info.get('temperature') %}
                         <input type="text" name="temperature" value="{{model_info['temperature']}}" class="form-control" placeholder="Temperature">
                         {% else %}
                         <input type="text" name="temperature" class="form-control" placeholder="Temperature">
                         {% endif %}
-                        <span class="input-group-addon">K</span>
+                        <span class="input-group-addon" data-toggle="tooltip" data-original-title="Kelvin">K</span>
                     </div>
                     <div class="input-group with-margin-bottom">
-                        <span class="input-group-addon">Max Iteration</span>
+                        <span class="input-group-addon" data-toggle="tooltip" data-original-title="Max iteration steps">Max Iteration</span>
                         {% if model_info and model_info.get('max_iteration') %}
                         <input type="text" name="max-iteration" value="{{ model_info.get('max_iteration') }}" class="form-control" placeholder="Max iteration step">
                         {% else %}
@@ -21,7 +21,7 @@
                         {% endif %}
                     </div>
                     <div class="input-group with-margin-bottom">
-                        <span class="input-group-addon">Tolerance</span>
+                        <span class="input-group-addon" data-toggle="tooltip" data-original-title="Error convergence criterion">Tolerance</span>
                         {% if model_info and model_info.get('tolerance') %}
                         <input type="text" name="tolerance" class="form-control" placeholder="Convergence Criterion" value="{{ model_info.get('tolerance') }}">
                         {% else %}
@@ -29,7 +29,7 @@
                         {% endif %}
                     </div>
                     <div class="input-group with-margin-bottom">
-                        <span class="input-group-addon">Rate Theory</span>
+                        <span class="input-group-addon" data-toggle="tooltip" data-original-title="Algorithm for rate calculation">Rate Theory</span>
                         <select name="rate-algo" class="form-control">
                         {% if model_info and model_info.get('rate_algo') %}
                             {% if model_info.get('rate_algo') == 'CT' %}
@@ -46,7 +46,7 @@
                         </select>
                     </div>
                     <div class="input-group with-margin-bottom">
-                        <span class="input-group-addon">RootFinding</span>
+                        <span class="input-group-addon" data-toggle="tooltip" data-original-title="Rootfinding iterator">RootFinding</span>
                         <select name="root-finding" class="form-control">
                         {% if model_info and model_info.get('rootfinding') %}
                             {% if model_info.get('rootfinding') == 'ConstrainedNewton' %}
@@ -73,14 +73,14 @@
                 <div id="species-form">
                     {% for gas, pressure in model_info.get('gas_pressures') %}
                     <div class="pressure-input input-group with-margin-bottom">
-                        <span class="input-group-addon">P<sub>({{ gas }})</sub></span>
+                        <span class="input-group-addon" data-toggle="tooltip" data-original-title="{{ gas }} pressure">P<sub>({{ gas }})</sub></span>
                         <input type="text" name="{{ gas }}" class="form-control" placeholder="{{ gas }} pressure" value="{{ pressure }}">
                         <span class="input-group-addon">bar</span>
                     </div>
                     {% endfor %}
                     {% for site, cvg in model_info.get('site_total_cvgs') %}
                     <div class="site-cvg-input input-group with-margin-bottom">
-                        <span class="input-group-addon">Total &theta;<sub>({{ site }})</sub></span>
+                        <span class="input-group-addon" data-toggle="tooltip" data-original-title="Total coverage of {{ site }}">Total &theta;<sub>({{ site }})</sub></span>
                         <input type="text" name="{{ site }}" class="form-control" placeholder="total coverage" value="{{ cvg }}">
                     </div>
                     {% endfor %}

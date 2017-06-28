@@ -30,7 +30,6 @@
     <script src="{{ url_for('static', filename='js/externals/jquery/jquery-3.2.1.js') }}"></script>
     <script src="{{ url_for('static', filename='js/externals/bootstrap/bootstrap.min.js') }}"></script>
     <script src="{{ url_for('static', filename='js/externals/moment/moment-with-locales.min.js') }}"></script>
-    {{ moment.include_moment() }}
     <script src="{{ url_for('static', filename='js/externals/rainbow/rainbow.min.js') }}"></script>
     <script src="{{ url_for('static', filename='js/externals/rainbow/rainbow.linenumbers.min.js') }}"></script>
     <script src="{{ url_for('static', filename='js/kynetix/kynetix.js') }}"></script>
@@ -40,6 +39,7 @@
     <script src="{{ url_for('static', filename='js/rxn-parser/rxn_parser.js') }}"></script>
     <script src="{{ url_for('static', filename='js/kynetix/model_panel.js') }}"></script>
     <script src="{{ url_for('static', filename='js/externals/highcharts/highcharts.js') }}"></script>
+    {{ moment.include_moment() }}
     {% endblock %}
 </body>
 </html>

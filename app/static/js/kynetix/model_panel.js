@@ -1,4 +1,7 @@
 ;(function($){
+    /* Initialize bootstrap tooltip */
+    $('span[data-toggle=tooltip]').tooltip();
+
     /* Load species information form */
     var getPressureInput = function(gas) {
         var inputHtml = ''
@@ -9,6 +12,9 @@
             + '<span class="input-group-addon">bar</span>'
             + '</div>';
         $inputHtml = $(inputHtml);
+        $inputHtml.children('span:first')
+            .attr('data-toggle', 'tooltip')
+            .attr('data-original-title', gas + ' pressure');
         return $inputHtml;
     };
 
@@ -21,6 +27,9 @@
             + '</div>';
         $inputHtml = $(inputHtml);
         $inputHtml.children('input').val('1.0');
+        $inputHtml.children('span:first')
+            .attr('data-toggle', 'tooltip')
+            .attr('data-original-title', 'Total coverage of ' + site);
         return $inputHtml;
     };
 
@@ -97,6 +106,9 @@
         $('#species-form input').each(function() {
             $(this).on('blur.kyn', checkSpeciesInput);
         });
+
+        // Initialize bootstrap tooltip.
+        $('span[data-toggle=tooltip]').tooltip();
     });
 
     // Bind check callback functions to species inputs
