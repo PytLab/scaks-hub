@@ -69,11 +69,29 @@
     <div id="species-properties" class="col-md-6">
         <div class="row">
             <div class="col-md-12">
+                {% if model_info and (model_info.get('gas_pressures') or model_info.get('site_total_cvgs')) %}
+                <div id="species-form">
+                    {% for gas, pressure in model_info.get('gas_pressures') %}
+                    <div class="pressure-input input-group with-margin-bottom">
+                        <span class="input-group-addon">P<sub>({{ gas }})</sub></span>
+                        <input type="text" name="{{ gas }}" class="form-control" placeholder="{{ gas }} pressure" value="{{ pressure }}">
+                        <span class="input-group-addon">bar</span>
+                    </div>
+                    {% endfor %}
+                    {% for site, cvg in model_info.get('site_total_cvgs') %}
+                    <div class="site-cvg-input input-group with-margin-bottom">
+                        <span class="input-group-addon">Total &theta;<sub>({{ site }})</sub></span>
+                        <input type="text" name="{{ site }}" class="form-control" placeholder="total coverage" value="{{ cvg }}">
+                    </div>
+                    {% endfor %}
+                </div>
+                {% else %}
                 <div id="no-species-form" class="well text-center embeded-charactors">
                     No species information, press <b><i class="fa fa-refresh"></i>Load species info</b> button to load them
                 </div>
                 <div id="species-form" style="display: none">
                 </div>
+                {% endif %}
             </div>
         </div>
     </div>

@@ -72,6 +72,19 @@ def model():
         model_info.setdefault('rootfinding', data.get('rootfinding'))
         model_info.setdefault('tolerance', data.get('tolerance'))
         model_info.setdefault('max_iteration', data.get('max_rootfinding_iterations'))
+
+        # Species information
+        species_definitions = data.get('species_definitions')
+        site_total_cvgs = []
+        gas_pressures = []
+        for sp, definition in species_definitions.items():
+            if definition.get('type') == 'site':
+                site_total_cvgs.append([sp, definition['total']])
+            else:
+                gas_pressures.append([sp, definition['pressure']])
+        model_info['gas_pressures'] = gas_pressures
+        model_info['site_total_cvgs'] = site_total_cvgs
+
         locs['model_info'] = model_info
     else:
         locs['model_info'] = {}

@@ -365,7 +365,7 @@
 
     // Load species form automatically.
     var $availRxns = $('#rxn-table tbody > tr').not('.disabled');
-    if ($availRxns.length > 0) {
+    if ($availRxns.length > 0 && $('#species-form').length < 1) {
         $('#load-species-form').trigger('click.kyn');
     }
 })(jQuery);
