@@ -216,9 +216,12 @@
             var Ga = $energies.data('ga');
             var dG = $energies.data('dg');
             if (Ga == 0.0) {
-                energies.push(offset, dG + offset);
+                energies.push(offset, {y: dG + offset, dg: dG});
             } else {
-                energies.push(offset, Ga + offset, dG + offset);
+                energies.push(
+                    offset,
+                    {y: Ga + offset, ga: Ga},
+                    {y: dG + offset, dg: dG});
             }
             offset += dG;
         });
@@ -240,21 +243,34 @@
                     enabled: false
                 },
                 gridLineWidth: 1,
+                crosshair: true
             },
             yAxis: {
                 title: {
                     text: 'Relative Energy (eV)'
                 },
+                crosshair: true
             },
             series: [{
                 type: 'spline',
                 name: 'energy',
-                data: energies
-            }]
+                data: energies,
+            }],
+            tooltip: {
+                formatter: function() {
+                    var content = 'energy: <b>' + this.y + '</b>eV<br>';
+                    if (this.point.ga != undefined) {
+                        content += 'G<sub>a</sub>: <b>' + this.point.ga + '</b>eV';
+                    }
+                    if (this.point.dg != undefined) {
+                        content += 'dG: <b>' + this.point.dg + '</b>eV';
+                    }
+                    return content;
+                }
+            }
         };
-        var chart = new Highcharts.Chart('energy-profile-container', options);
-
         $('#energy-profile').modal('show');
+        var chart = new Highcharts.Chart('energy-profile-container', options);
     });
 
 })(jQuery);
