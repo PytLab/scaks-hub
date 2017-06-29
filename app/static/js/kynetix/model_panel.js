@@ -142,7 +142,7 @@
                 show: true,
                 status: 'error',
                 msg: ''
-                    + '<span style="font-family: Courier New, Consolas">'
+                    + '<span class="monospaced">'
                     + value + '</span> is not a valid data !'
             });
             return false;
@@ -155,7 +155,7 @@
                     status: 'error',
                     msg: ''
                         + 'Coverage out of range '
-                        + '<span style="font-family: Courier New, Consolas">'
+                        + '<span class="monospaced">'
                         + '[0.0 ~ 1.0]</span> !'
                 });
                 return false;
@@ -202,7 +202,7 @@
                 show: true,
                 status: 'error',
                 msg: ''
-                    + '<span style="font-family: Courier New, Consolas">'
+                    + '<span class="monospaced">'
                     + value + '</span>'
                     + ' is not a number !'
             });
@@ -212,10 +212,10 @@
                 show: true,
                 status: 'error',
                 msg: ''
-                    + '<span style="font-family: Courier New, Consolas">'
+                    + '<span class="monospaced">'
                     + value + '</span>'
                     + ' out of range '
-                    + '<span style="font-family: Courier New, Consolas">'
+                    + '<span class="monospaced">'
                     + '[-273.15, &infin;)</span> !'
             });
             return false;
@@ -248,7 +248,7 @@
                 show: true,
                 status: 'error',
                 msg: ''
-                    + '<span style="font-family: Courier New, Consolas">'
+                    + '<span class="monospaced">'
                     + value + '</span>'
                     + ' is not an positive integer!'
             });
@@ -283,7 +283,7 @@
                 show: true,
                 status: 'error',
                 msg: ''
-                    + '<span style="font-family: Courier New, Consolas">'
+                    + '<span class="monospaced">'
                     + value + '</span>'
                     + ' is not an number !'
             });
@@ -294,7 +294,7 @@
                 status: 'error',
                 msg: ''
                     + 'tolerance should be smaller than '
-                    + '<span style="font-family: Courier New, Consolas">'
+                    + '<span class="monospaced">'
                     + '1e-5</span> !'
             });
         } else {
@@ -329,7 +329,7 @@
                 show: true,
                 status: 'error',
                 msg: ''
-                    + '<span style="font-family: Courier New, Consolas">'
+                    + '<span class="monospaced">'
                     + value + '</span>'
                     + ' is not an positive integer!'
             });
@@ -366,7 +366,7 @@
                 show: true,
                 status: 'error',
                 msg: ''
-                    + '<span style="font-family: Courier New, Consolas">'
+                    + '<span class="monospaced">'
                     + value + '</span>'
                     + ' is not an number !'
             });

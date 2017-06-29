@@ -199,7 +199,7 @@
                 $('#Ga-input').form_status({
                     show: true,
                     status: 'error',
-                    msg: '<span style="font-family: Courier New, consola">'
+                    msg: '<span class="monospaced">'
                          + Ga + '</span>'
                          + ' is not a number !'
                 });
@@ -224,7 +224,7 @@
             $('#dG-input').form_status({
                 show: true,
                 status: 'error',
-                msg: '<span style="font-family: Courier New, consola">'
+                msg: '<span class="monospaced">'
                      + dG + '</span>'
                      + ' is not a number!'
             });
@@ -244,7 +244,7 @@
                     show: true,
                     status: 'error',
                     msg: 'Invalid energies'
-                         + '<span style="font-family: Courier New, consola">'
+                         + '<span class="monospaced">'
                          + '(' + Ga + ', ' + dG + ')'
                          + '</span> !'
                 });
