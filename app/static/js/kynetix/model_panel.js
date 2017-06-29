@@ -309,6 +309,143 @@
     };
     $('#model-param-form input[name=tolerance]').on('blur.kyn', checkTolerance);
 
+    var checkUnitArea = function() {
+        $unitArea = $('#model-param-form input[name=unitcell-area]');
+        if ($unitArea.length < 1) {
+            return true;
+        }
+        $inputGroup = $unitArea.parent('.input-group');
+        value = $unitArea.val();
+
+        if (!value) {
+            $inputGroup.form_status({
+                show: true,
+                status: 'warning',
+                msg: 'Please enter the unit cell area !'
+            });
+            return false;
+        } else if (isNaN(value) || value.indexOf('.') != -1 || value <= 0) {
+            $inputGroup.form_status({
+                show: true,
+                status: 'error',
+                msg: ''
+                    + '<span style="font-family: Courier New, Consolas">'
+                    + value + '</span>'
+                    + ' is not an positive integer!'
+            });
+            return false;
+        } else {
+            $inputGroup.form_status({
+                show: true,
+                status: 'success',
+                msg: ''
+            });
+
+            return true;
+        }
+    };
+    $('#model-param-form input[name=unitcell-area]').on('blur.kyn', checkUnitArea);
+
+    var checkActiveRatio = function() {
+        $activeRatio = $('#model-param-form input[name=active-ratio]');
+        if ($activeRatio.length < 1) {
+            return true;
+        }
+        $inputGroup = $activeRatio.parent('.input-group');
+        value = $activeRatio.val();
+
+        if (!value) {
+            $inputGroup.form_status({
+                show: true,
+                status: 'warning',
+                msg: 'Please enter the active ratio !'
+            });
+            return false;
+        } else if (isNaN(value)) {
+            $inputGroup.form_status({
+                show: true,
+                status: 'error',
+                msg: ''
+                    + '<span style="font-family: Courier New, Consolas">'
+                    + value + '</span>'
+                    + ' is not an number !'
+            });
+            return false;
+        } else if (value > 1 || value <= 0) {
+            $inputGroup.form_status({
+                show: true,
+                status: 'error',
+                msg: 'ratio must be in the range <span class="monospaced">(0.0, 1.0]</span>'
+            });
+        } else {
+            $inputGroup.form_status({
+                show: true,
+                status: 'success',
+                msg: ''
+            });
+
+            return true;
+        }
+    };
+    $('#model-param-form input[name=active-ratio').on('blur.kyn', checkActiveRatio);
+
+    var getGeneralInput = function(option) {
+        $inputGroup = $('<div class="input-group with-margin-bottom"></div>')
+        // Addon
+        $headAddon = $('<span class="input-group-addon" data-toggle="tooltip"></span>')
+            .attr('data-original-title', option.headTooltip)
+            .html(option.headAddon);
+        $inputGroup.append($headAddon);
+        $input = $('<input type="text" class="form-control">')
+            .attr('name', option.inputName)
+            .attr('placeholder', option.placeholder);
+        $inputGroup.append($input);
+        if (option.tailAddon != undefined) {
+            $tailAddon = $('<span class="input-group-addon" data-toggle="tooltip"></span>')
+                .attr('data-original-title', option.tailTooltip)
+                .html(option.tailAddon);
+            $inputGroup.append($tailAddon);
+        }
+
+        return $inputGroup;
+    };
+
+    $('#model-param-form select[name=rate-algo]').on('change.kyn', function() {
+        $this = $(this);
+        if ($this.val() == 'CT') {
+            $activeRatio = getGeneralInput({
+                headTooltip: 'Ratio of active area in an unitcell',
+                headAddon: 'Active Ratio',
+                inputName: 'active-ratio',
+                placeholder: 'active area / unit cell area',
+            });
+            $activeRatio.on('blur.kyn', checkActiveRatio);
+            $(this).parent('div.input-group').after($activeRatio);
+
+            $areaInput = getGeneralInput({
+                headTooltip: 'Unitcell area',
+                headAddon: 'Unit Area',
+                inputName: 'unitcell-area',
+                placeholder: 'Area of an unit cell',
+                tailAddon: 'm<sup>2</sup>',
+                tailTooltip: 'Square meter'
+            });
+            $areaInput.on('blur.kyn', checkUnitArea);
+            $(this).parent('div.input-group').after($areaInput);
+
+            // Reactivate bootstrap tooltip
+            $('span[data-toggle=tooltip]').tooltip();
+        }
+        else if ($this.val() == 'TST') {
+            $('#model-param-form input[name=unitcell-area]').parent('div.input-group')
+                .form_status({ remove: true })
+                .remove();
+            $('#model-param-form input[name=active-ratio]').parent('div.input-group')
+                .form_status({ remove: true })
+                .remove();
+        }
+    });
+
     /* Reset all fields */
     var clearModelForm = function() {
         $('#model-form input').each(function() {
@@ -318,6 +455,14 @@
             // Select fields.
             $('#model-form select[name=rate-algo]').val('TST');
             $('#model-form select[name=root-finding]').val('MDNewton');
+
+            // Remove area related inputs.
+            $('#model-param-form input[name=unitcell-area]')
+                .parent('div.input-group')
+                .remove();
+            $('#model-param-form input[name=active-ratio')
+                .parent('div.input-group')
+                .remove();
         });
     };
     $('#reset-model').on('click.kyn', clearModelForm);
@@ -328,7 +473,9 @@
         if (!(checkTemperature()
                 && checkTolerance()
                 && checkMaxIteration()
-                && checkAllSpeciesInputs())) {
+                && checkAllSpeciesInputs()
+                && checkUnitArea()
+                && checkActiveRatio())) {
             showAlertInfo('Please input valid model paramters !', 'danger');
             $('#model-btns img').css('display', 'none');
             return false;
@@ -361,6 +508,10 @@
         modelData.tolerance = $('#model-param-form input[name=tolerance]').val();
         modelData.rate_algo = $('#model-param-form select[name=rate-algo]').val();
         modelData.root_finding = $('#model-param-form select[name=root-finding]').val();
+        if (modelData.rate_algo == 'CT') {
+            modelData.unitcell_area = $('#model-param-form input[name=unitcell-area]').val();
+            modelData.active_ratio = $('#model-param-form input[name=active-ratio]').val();
+        }
         modelData.full_path = $('#full-path').data('full-path');
 
         // Send data using ajax
@@ -376,56 +527,6 @@
             }
         });
         $('#model-btns img').css('display', 'none');
-    });
-
-    var getGeneralInput = function(option) {
-        $inputGroup = $('<div class="input-group with-margin-bottom"></div>')
-        // Addon
-        $headAddon = $('<span class="input-group-addon" data-toggle="tooltip"></span>')
-            .attr('data-original-title', option.headTooltip)
-            .html(option.headAddon);
-        $inputGroup.append($headAddon);
-        $input = $('<input type="text" class="form-control">')
-            .attr('name', option.inputName)
-            .attr('placeholder', option.placeholder);
-        $inputGroup.append($input);
-        if (option.tailAddon != undefined) {
-            $tailAddon = $('<span class="input-group-addon" data-toggle="tooltip"></span>')
-                .attr('data-original-title', option.tailTooltip)
-                .html(option.tailAddon);
-            $inputGroup.append($tailAddon);
-        }
-
-        return $inputGroup;
-    };
-
-    $('#model-param-form select[name=rate-algo]').on('change.kyn', function() {
-        $this = $(this);
-        if ($this.val() == 'CT') {
-            $activeRatio = getGeneralInput({
-                headTooltip: 'Ratio of active area in an unitcell',
-                headAddon: 'Active Ratio',
-                inputName: 'active-ratio',
-                placeholder: 'active area / unit cell area',
-            });
-            $(this).parent('div.input-group').after($activeRatio);
-            $areaInput = getGeneralInput({
-                headTooltip: 'Unitcell area',
-                headAddon: 'Unit Area',
-                inputName: 'unitcell-area',
-                placeholder: 'Area of an unit cell',
-                tailAddon: 'm<sup>2</sup>',
-                tailTooltip: 'Square meter'
-            });
-            $(this).parent('div.input-group').after($areaInput);
-
-            // Reactivate bootstrap tooltip
-            $('span[data-toggle=tooltip]').tooltip();
-        }
-        else if ($this.val() == 'TST') {
-            $('#model-param-form input[name=unitcell-area]').parent('div.input-group').remove();
-            $('#model-param-form input[name=active-ratio]').parent('div.input-group').remove();
-        }
     });
 
     // Load species form automatically.

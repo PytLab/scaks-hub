@@ -48,12 +48,12 @@
                     {% if model_info.get('rate_algo') == 'CT' %}
                     <div class="input-group with-margin-bottom">
                         <span class="input-group-addon" data-toggle="tooltip" data-original-title="Unitcell area">Unit Area</span>
-                        <input type="text" name="unitcell-area" class="form-control" placeholder="Unitcell area">
+                        <input type="text" name="unitcell-area" class="form-control" placeholder="Unitcell area" value="{{ model_info.get('unitcell_area') }}">
                         <span class="input-group-addon" data-toggle="tooltip" data-original-title="Square meter">m<sup>2</sup></span>
                     </div>
                     <div class="input-group with-margin-bottom">
                         <span class="input-group-addon" data-toggle="tooltip" data-original-title="Ratio of active area in unitcell">Active Ratio</span>
-                        <input type="text" name="active-ratio" class="form-control" placeholder="active area / unit cell area">
+                        <input type="text" name="active-ratio" class="form-control" placeholder="active area / unit cell area" value="{{ model_info.get('active_ratio') }}">
                     </div>
                     {% endif %}
                     <div class="input-group with-margin-bottom">

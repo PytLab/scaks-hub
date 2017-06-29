@@ -22,6 +22,10 @@ i {
     margin-right: 6px;
 }
 
+.monospaced {
+    font-family: "Courier New", "Consolas"
+}
+
 .pull-right {
     float: right;
 }

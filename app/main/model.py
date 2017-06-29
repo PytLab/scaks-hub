@@ -73,6 +73,10 @@ def model():
         model_info.setdefault('tolerance', data.get('tolerance'))
         model_info.setdefault('max_iteration', data.get('max_rootfinding_iterations'))
 
+        if data.get('rate_algo') == 'CT':
+            model_info.setdefault('unitcell_area', data.get('unitcell_area', ''))
+            model_info.setdefault('active_ratio', data.get('active_ratio', ''))
+
         # Species information
         species_definitions = data.get('species_definitions')
         site_total_cvgs = []
@@ -172,6 +176,13 @@ def save_model():
                       "solver = 'SteadyStateSolver'\n" +
                       "corrector = 'ThermodynamicCorrector'\n" +
                       "plotter = 'EnergyProfilePlotter'\n")
+
+    if rate_algo == 'CT':
+        unitcell_area = float(model_data.get('unitcell_area'))
+        model_content += '\nunitcell_area = {}\n'.format(unitcell_area)
+        active_ratio = float(model_data.get('active_ratio'))
+        model_content += 'active_ratio = {}\n'.format(active_ratio)
+
     model_content += "\nrate_algo = '{}'\n".format(rate_algo)
     model_content += "rootfinding = '{}'\n".format(rootfinding)
     model_content += "tolerance = {:e}\n".format(tolerance)
