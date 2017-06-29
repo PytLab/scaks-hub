@@ -26,6 +26,10 @@ i {
     float: right;
 }
 
+.file-content {
+    font-size: 9px;
+}
+
 @media (max-width: 768px) {
     /* File content styles */
     .file-info > .text-center {

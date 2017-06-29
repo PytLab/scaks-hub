@@ -258,7 +258,7 @@
             }],
             tooltip: {
                 formatter: function() {
-                    var content = 'energy: <b>' + this.y + '</b>eV<br>';
+                    var content = 'Energy: <b>' + this.y + '</b>eV<br>';
                     if (this.point.ga != undefined) {
                         content += 'G<sub>a</sub>: <b>' + this.point.ga + '</b>eV';
                     }

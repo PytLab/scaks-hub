@@ -378,6 +378,56 @@
         $('#model-btns img').css('display', 'none');
     });
 
+    var getGeneralInput = function(option) {
+        $inputGroup = $('<div class="input-group with-margin-bottom"></div>')
+        // Addon
+        $headAddon = $('<span class="input-group-addon" data-toggle="tooltip"></span>')
+            .attr('data-original-title', option.headTooltip)
+            .html(option.headAddon);
+        $inputGroup.append($headAddon);
+        $input = $('<input type="text" class="form-control">')
+            .attr('name', option.inputName)
+            .attr('placeholder', option.placeholder);
+        $inputGroup.append($input);
+        if (option.tailAddon != undefined) {
+            $tailAddon = $('<span class="input-group-addon" data-toggle="tooltip"></span>')
+                .attr('data-original-title', option.tailTooltip)
+                .html(option.tailAddon);
+            $inputGroup.append($tailAddon);
+        }
+
+        return $inputGroup;
+    };
+
+    $('#model-param-form select[name=rate-algo]').on('change.kyn', function() {
+        $this = $(this);
+        if ($this.val() == 'CT') {
+            $activeRatio = getGeneralInput({
+                headTooltip: 'Ratio of active area in an unitcell',
+                headAddon: 'Active Ratio',
+                inputName: 'active-ratio',
+                placeholder: 'active area / unit cell area',
+            });
+            $(this).parent('div.input-group').after($activeRatio);
+            $areaInput = getGeneralInput({
+                headTooltip: 'Unitcell area',
+                headAddon: 'Unit Area',
+                inputName: 'unitcell-area',
+                placeholder: 'Area of an unit cell',
+                tailAddon: 'm<sup>2</sup>',
+                tailTooltip: 'Square meter'
+            });
+            $(this).parent('div.input-group').after($areaInput);
+
+            // Reactivate bootstrap tooltip
+            $('span[data-toggle=tooltip]').tooltip();
+        }
+        else if ($this.val() == 'TST') {
+            $('#model-param-form input[name=unitcell-area]').parent('div.input-group').remove();
+            $('#model-param-form input[name=active-ratio]').parent('div.input-group').remove();
+        }
+    });
+
     // Load species form automatically.
     var $availRxns = $('#rxn-table tbody > tr').not('.disabled');
     if ($availRxns.length > 0 && $('#species-form').length < 1) {
