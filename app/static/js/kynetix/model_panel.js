@@ -419,8 +419,9 @@
                 inputName: 'active-ratio',
                 placeholder: 'active area / unit cell area',
             });
-            $activeRatio.on('blur.kyn', checkActiveRatio);
-            $(this).parent('div.input-group').after($activeRatio);
+            $this.parent('div.input-group').after($activeRatio);
+            $activeRatio.children('input[name=active-ratio]')
+                .on('blur.kyn', checkActiveRatio);
 
             $areaInput = getGeneralInput({
                 headTooltip: 'Unitcell area',
@@ -430,8 +431,9 @@
                 tailAddon: 'm<sup>2</sup>',
                 tailTooltip: 'Square meter'
             });
-            $areaInput.on('blur.kyn', checkUnitArea);
-            $(this).parent('div.input-group').after($areaInput);
+            $this.parent('div.input-group').after($areaInput);
+            $areaInput.children('input[name=unitcell-area]')
+                .on('blur.kyn', checkUnitArea);
 
             // Reactivate bootstrap tooltip
             $('span[data-toggle=tooltip]').tooltip();
