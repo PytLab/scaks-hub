@@ -226,6 +226,7 @@
             offset += dG;
         });
         energies.push(offset);
+        console.log(energies);
 
         // Chart options.
         var options = {
