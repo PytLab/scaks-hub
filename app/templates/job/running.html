@@ -5,3 +5,8 @@
 {% include "files/file_path.html" %}
 {% include "job/running_panel.html" %}
 {% endblock %}
+
+{% block script %}
+{{ super() }}
+<script src="{{ url_for('static', filename='js/kynetix/job_running.js') }}"></script>
+{% endblock %}

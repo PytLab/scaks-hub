@@ -7,7 +7,6 @@ import logging
 
 from flask import request, render_template, jsonify
 from kynetix.parsers.rxn_parser import RxnEquation
-from kynetix.models.micro_kinetic_model import MicroKineticModel
 
 from . import main
 from . import FILE_HEADER
@@ -196,41 +195,4 @@ def save_model():
         f.write(model_content)
 
     return 'Saved', 200
-
-def run_mkm(path):
-    ''' Run the microkinetic model in path.
-
-    :param path: the absolute path where the job inputs are stored.
-    '''
-    # Set logger.
-    logger = logging.getLogger('model.MkmRun')
-
-    # Get setup dict.
-    setup_dict = {}
-    rxns_filename = '{}/rxns.py'.format(path)
-    energies_filename = '{}/rel_energy.py'.format(path)
-    model_filename = '{}/model.py'.format(path)
-    for filename in [rxns_filename, model_filename]:
-        exec(open(filename, 'r').read(), {}, setup_dict)
-
-    # Create model.
-    model = MicroKineticModel(setup_dict=setup_dict)
-    parser = model.parser
-    solver = model.solver
-
-    parser.parse_data(energies_filename)
-    solver.get_data()
-
-    # Run ODE and get initial coverages guess.
-    trajectory = solver.solve_ode(time_span=0.001,
-                                  time_end=1,
-                                  traj_output=True)
-    init_guess = trajectory[-1]
-
-    # Run the model.
-    model.run(init_cvgs=init_guess)
-
-@main.route('/model/run/')
-def run_model():
-    pass
 
