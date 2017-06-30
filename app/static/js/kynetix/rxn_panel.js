@@ -213,8 +213,8 @@
         var offset = 0.0;
         $tr.each(function() {
             var $energies = $(this).children('.rxn-energies');
-            var Ga = $energies.data('ga');
-            var dG = $energies.data('dg');
+            var Ga = parseFloat($energies.data('ga'));
+            var dG = parseFloat($energies.data('dg'));
             if (Ga == 0.0) {
                 energies.push(offset, {y: dG + offset, dg: dG});
             } else {
@@ -226,6 +226,7 @@
             offset += dG;
         });
         energies.push(offset);
+        console.log(energies);
 
         // Chart options.
         var options = {
