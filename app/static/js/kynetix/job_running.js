@@ -51,7 +51,7 @@
                 $alert = $('#running-panel-body .well');
                 $alert.html('<b>' + errorThrown + '</b>').css('display', 'block');
                 $('#running-panel-body div.panel-body').children('pre').remove();
-                $('#running-panel-body img').css('display', 'none');
+                $('#running-panel .panel-heading img').css('display', 'none');
                 $('#running-panel').removeClass('panel-warning')
                     .addClass('panel-danger');
                 window.clearInterval(logQuery);
