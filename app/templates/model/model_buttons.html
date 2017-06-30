@@ -1,7 +1,7 @@
 <!-- Reactions buttons -->
 <div id="model-btns" class="row">
     <div class="col-xs-7 col-sm-6 col-md-6 with-margin-bottom">
-        <button type="button" id="run-model" class="btn btn-sm btn-success"><i class="fa fa-play"></i><b>Run</b></button>
+        <a id="run-model" class="btn btn-sm btn-success" href="{{ url_for('main.running', path=path) }}" target="_blank"><i class="fa fa-play"></i><b>Run</b></a>
         <button type="button" id="save-model" class="btn btn-sm btn-primary"><i class="fa fa-floppy-o"></i><b>Save</b></button>
         <button type="button" id="reset-model" class="btn btn-sm btn-default"><i class="fa fa-refresh"></i><b>Reset</b></button>
         <img class="with-margin-left" src="/static/img/broken-circle-20x20.gif" alt="Loading" style="display: none">
