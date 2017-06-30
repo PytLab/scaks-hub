@@ -31,18 +31,33 @@
         return $codeBlock;
     }
 
-    $.ajax({
-        url: '/running/log/',
-        type: 'POST',
-        data: {
-            full_path: $('#full-path').data('full-path')
-        },
-        dataType: 'json',
-        success: function(data, textStatus) {
-            var contentLines = data.content_lines;
-            // Create code block.
-            $codeBlock = getCodeBlock('python', contentLines);
-            $('#running-panel-body div.panel-body').append($codeBlock);
-        },
-    });
+    var queryLogContent = function() {
+        $.ajax({
+            url: '/running/log/',
+            type: 'POST',
+            data: {
+                full_path: $('#full-path').data('full-path')
+            },
+            dataType: 'json',
+            success: function(data, textStatus) {
+                var contentLines = data.content_lines;
+                // Create code block.
+                $codeBlock = getCodeBlock('python', contentLines);
+                $('#running-panel-body div.panel-body').children('pre')
+                     .remove().end().append($codeBlock);
+                $('#running-panel-body img').css('display', 'none');
+            },
+            error: function(XMLHttpRequest, textStatus, errorThrown) {
+                $alert = $('#running-panel-body .well');
+                $alert.html('<b>' + errorThrown + '</b>').css('display', 'block');
+                $('#running-panel').removeClass('panel-warning')
+                    .addClass('panel-danger');
+                $('#running-panel-body img').css('display', 'none');
+            }
+        });
+    };
+
+    queryLogContent();
+    window.setInterval(queryLogContent, 3000);
+
 })(jQuery);

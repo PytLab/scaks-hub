@@ -1,7 +1,7 @@
 <div class="row">
     <!-- store path info -->
     <div id="full-path" data-full-path="{{ full_path }}"></div>
-    <div class="panel panel-warning">
+    <div id="running-panel" class="panel panel-warning">
         <div class="panel-heading">
             <div class="embeded-charactors">
                 <img class="with-margin-right" src="/static/img/growing-ring-10x10.gif" alt="Job is running...">Job running...
@@ -9,6 +9,10 @@
         </div>
         <div id="running-panel-body">
             <div class="panel-body">
+            <div class="text-center">
+                <img src="/static/img/broken-circle.gif" alt="Loading log...">
+            </div>
+            <div class="well embeded-charactors" style="display: none"></div>
             </div>
         </div>
     </div>
