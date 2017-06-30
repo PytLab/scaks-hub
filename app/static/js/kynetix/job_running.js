@@ -50,14 +50,16 @@
             error: function(XMLHttpRequest, textStatus, errorThrown) {
                 $alert = $('#running-panel-body .well');
                 $alert.html('<b>' + errorThrown + '</b>').css('display', 'block');
+                $('#running-panel-body div.panel-body').children('pre').remove();
+                $('#running-panel-body img').css('display', 'none');
                 $('#running-panel').removeClass('panel-warning')
                     .addClass('panel-danger');
-                $('#running-panel-body img').css('display', 'none');
+                window.clearInterval(logQuery);
             }
         });
     };
 
     queryLogContent();
-    window.setInterval(queryLogContent, 3000);
+    var logQuery = window.setInterval(queryLogContent, 3000);
 
 })(jQuery);
