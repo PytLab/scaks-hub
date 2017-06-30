@@ -19,6 +19,12 @@ def run_mkm(path):
     '''
     # Change current directory
     os.chdir(path)
+    current_path = os.getcwd()
+
+    # Remove old log file.
+    logfile = '{}/out.log'.format(current_path)
+    if os.path.exists(logfile):
+        os.remove(logfile)
 
     # Set logger.
     # Get setup dict.
@@ -64,7 +70,6 @@ def running():
     job_proc = multiprocessing.Process(target=run_mkm,
                                        args=(full_path,),
                                        daemon=True)
-    print('start new proc')
     job_proc.start()
 
     return render_template('/job/running.html', **locs)
