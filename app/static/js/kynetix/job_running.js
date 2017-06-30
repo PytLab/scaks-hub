@@ -46,12 +46,29 @@
                 $('#running-panel-body div.panel-body').children('pre')
                      .remove().end().append($codeBlock);
                 $('#running-panel-body img').css('display', 'none');
+
+                // Check if stop query
+                if (data.stop) {
+                    window.clearInterval(logQuery);
+                    if (data.success) {
+                        $('#running-panel').removeClass('panel-warning')
+                            .addClass('panel-success');
+                        $('#running').css('display', 'none');
+                        $('#run-success').css('display', 'inline');
+                    } else {
+                        $('#running-panel').removeClass('panel-warning')
+                            .addClass('panel-danger');
+                        $('#job-logo img').css('display', 'none');
+                        $('#run-failure').css('display', 'inline');
+                    }
+                }
             },
             error: function(XMLHttpRequest, textStatus, errorThrown) {
                 $alert = $('#running-panel-body .well');
                 $alert.html('<b>' + errorThrown + '</b>').css('display', 'block');
                 $('#running-panel-body div.panel-body').children('pre').remove();
-                $('#running-panel .panel-heading img').css('display', 'none');
+                $('#running').css('display', 'none');
+                $('#run-failure').css('display', 'inline');
                 $('#running-panel').removeClass('panel-warning')
                     .addClass('panel-danger');
                 window.clearInterval(logQuery);

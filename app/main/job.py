@@ -23,34 +23,50 @@ def run_mkm(path):
 
     # Remove old log file.
     logfile = '{}/out.log'.format(current_path)
-    if os.path.exists(logfile):
-        os.remove(logfile)
+    to_be_removed = [logfile, 'run_success', 'run_failure']
+    for filename in to_be_removed:
+        if os.path.exists(filename):
+            os.remove(filename)
 
-    # Set logger.
-    # Get setup dict.
-    setup_dict = {}
-    rxns_filename = '{}/rxns.py'.format(path)
-    energies_filename = '{}/rel_energy.py'.format(path)
-    model_filename = '{}/model.py'.format(path)
-    for filename in [rxns_filename, model_filename]:
-        exec(open(filename, 'r').read(), {}, setup_dict)
+    logger = logging.getLogger('model.MkmRun')
 
-    # Create model.
-    model = MicroKineticModel(setup_dict=setup_dict)
-    parser = model.parser
-    solver = model.solver
+    try:
+        # Get setup dict.
+        setup_dict = {}
+        rxns_filename = '{}/rxns.py'.format(path)
+        energies_filename = '{}/rel_energy.py'.format(path)
+        model_filename = '{}/model.py'.format(path)
+        for filename in [rxns_filename, model_filename]:
+            exec(open(filename, 'r').read(), {}, setup_dict)
 
-    parser.parse_data(energies_filename)
-    solver.get_data()
+        # Create model.
+        model = MicroKineticModel(setup_dict=setup_dict)
+        parser = model.parser
+        solver = model.solver
 
-    # Run ODE and get initial coverages guess.
-    trajectory = solver.solve_ode(time_span=0.001,
-                                  time_end=1,
-                                  traj_output=True)
-    init_guess = trajectory[-1]
+        parser.parse_data(energies_filename)
+        solver.get_data()
 
-    # Run the model.
-    model.run(init_cvgs=init_guess)
+        # Run ODE and get initial coverages guess.
+        trajectory = solver.solve_ode(time_span=0.001,
+                                      time_end=1,
+                                      traj_output=True)
+        init_guess = trajectory[-1]
+
+        # Run the model.
+        model.run(init_cvgs=init_guess)
+
+        with open('run_success', 'w') as f:
+            pass
+
+    except Exception as e:
+        msg = "{} exception is catched.".format(type(e).__name__)
+        logger.exception(msg)
+
+        with open('run_failure', 'w') as f:
+            pass
+
+        raise e
 
 job_proc = None
 
@@ -82,6 +98,19 @@ def get_job_log():
         log_content = f.readlines()
 
     log = {'content_lines': log_content}
+
+    # Check job status stamp file.
+    success = '{}/run_success'.format(full_path)
+    failure = '{}/run_failure'.format(full_path)
+
+    if os.path.exists(success):
+        log['stop'] = True
+        log['success'] = True
+    elif os.path.exists(failure):
+        log['stop'] = True
+        log['success'] = False
+    else:
+        log['stop'] = False
 
     return jsonify(log)
 

@@ -3,8 +3,19 @@
     <div id="full-path" data-full-path="{{ full_path }}"></div>
     <div id="running-panel" class="panel panel-warning">
         <div class="panel-heading">
-            <div class="embeded-charactors">
-                <img class="with-margin-right" src="/static/img/growing-ring-10x10.gif" alt="Job is running...">Job running...
+            <div class="embeded-charactors" id="job-logo">
+                <span id="running">
+                <img class="with-margin-right" src="/static/img/snake-20x20.gif" alt="Job is running...">
+                Running...
+                </span>
+                <span id="run-success" style="display: none">
+                <i class="fa fa-check with-margin-right"></i>
+                Succeed
+                </span>
+                <span id="run-failure" style="display: none">
+                <i class="fa fa-times with-margin-right"></i>
+                Failed
+                </span>
             </div>
         </div>
         <div id="running-panel-body">
