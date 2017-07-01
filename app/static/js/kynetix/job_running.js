@@ -56,6 +56,7 @@
                         $('#running').css('display', 'none');
                         $('#run-success').css('display', 'inline');
                         $('#run-time').css('display', 'inline').text(data.duration);
+                        $('#report-button').css('display', 'inline');
                     } else {
                         $('#running-status').removeClass('alert-warning')
                             .addClass('alert-danger');

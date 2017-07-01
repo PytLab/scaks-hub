@@ -19,11 +19,15 @@
             </div>
             <div class="col-md-6 text-right">
                 <i class="fa fa-clock-o"></i>
-                <span id="run-time" style="display: none">
+                <span id="run-time" class="with-margin-right" style="display: none">
                 </span>
+                <a id="report-button" class="btn btn-default btn-sm" href="#" style="display: none">
+                    <i class="fa fa-list"></i><b>Result report</b>
+                </a>
             </div>
         </div>
     </div>
+    {% include "job/running_buttons.html" %}
     <div id="running-log">
         <div class="text-center">
             <img src="/static/img/broken-circle.gif" alt="Loading log...">
