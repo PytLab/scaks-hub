@@ -5,9 +5,11 @@ import os
 import json
 import logging
 import multiprocessing
+import time
 
 from flask import render_template, request, jsonify
 from kynetix.models.micro_kinetic_model import MicroKineticModel
+from kynetix.utilities.format_utilities import convert_time
 
 from . import main
 from .files import get_links_paths
@@ -30,6 +32,7 @@ def run_mkm(path):
 
     logger = logging.getLogger('model.MkmRun')
 
+    start = time.time()
     try:
         # Get setup dict.
         setup_dict = {}
@@ -48,7 +51,7 @@ def run_mkm(path):
         solver.get_data()
 
         # Run ODE and get initial coverages guess.
-        trajectory = solver.solve_ode(time_span=0.001,
+        trajectory = solver.solve_ode(time_span=0.0001,
                                       time_end=1,
                                       traj_output=True)
         init_guess = trajectory[-1]
@@ -56,15 +59,22 @@ def run_mkm(path):
         # Run the model.
         model.run(init_cvgs=init_guess)
 
+        end = time.time()
+        t = end - start
+        h, m, s = convert_time(t)
         with open('run_success', 'w') as f:
-            pass
+            f.write('duration="{:d} h {:d} min {:.2f} sec"\n'.format(h, m, s))
 
     except Exception as e:
         msg = "{} exception is catched.".format(type(e).__name__)
         logger.exception(msg)
 
         with open('run_failure', 'w') as f:
-            pass
+            end = time.time()
+            t = end - time
+            h, m, s = convert_time(t)
+            with open('run_success', 'w') as f:
+                f.write('duration="{:d} h {:d} min {:.2f} sec"\n'.format(h, m, s))
 
         raise e
 
@@ -93,6 +103,8 @@ def running():
 @main.route('/running/log/', methods=['POST'])
 def get_job_log():
     full_path = request.form.get('full_path')
+    if full_path.endswith('/'):
+        full_path = full_path[: -1]
     logfile = '{}/out.log'.format(full_path)
     with open(logfile, 'r') as f:
         log_content = f.readlines()
@@ -106,9 +118,15 @@ def get_job_log():
     if os.path.exists(success):
         log['stop'] = True
         log['success'] = True
+        job_info = {}
+        exec(open(success, 'r').read(), {}, job_info)
+        log['duration'] = job_info['duration']
     elif os.path.exists(failure):
         log['stop'] = True
         log['success'] = False
+        job_info = {}
+        exec(open(failure, 'r').read(), {}, job_info)
+        log['duration'] = job_info['duration']
     else:
         log['stop'] = False
 

@@ -55,22 +55,24 @@
                             .addClass('alert-success');
                         $('#running').css('display', 'none');
                         $('#run-success').css('display', 'inline');
+                        $('#run-time').css('display', 'inline').text(data.duration);
                     } else {
                         $('#running-status').removeClass('alert-warning')
                             .addClass('alert-danger');
                         $('#job-logo img').css('display', 'none');
                         $('#run-failure').css('display', 'inline');
+                        $('#run-time').css('display', 'inline').text(data.duration);
                     }
                 }
             },
             error: function(XMLHttpRequest, textStatus, errorThrown) {
-                $alert = $('#running-log');
-                $alert.html('<b>' + errorThrown + '</b>').css('display', 'block');
                 $('#running-log').children('pre').remove();
+                $('#running-log img').css('display', 'none');
                 $('#running').css('display', 'none');
                 $('#run-failure').css('display', 'inline');
                 $('#running-status').removeClass('alert-warning')
                     .addClass('alert-danger');
+                $('#running-status #run-failure').text(errorThrown);
                 window.clearInterval(logQuery);
             }
         });

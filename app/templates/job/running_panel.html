@@ -2,25 +2,31 @@
     <!-- store path info -->
     <div id="full-path" data-full-path="{{ full_path }}"></div>
     <div id="running-status" class="alert alert-warning">
-        <div class="embeded-charactors" id="job-logo">
-            <span id="running">
-            <img class="with-margin-right" src="/static/img/snake-20x20.gif" alt="Job is running...">
-            Running...
-            </span>
-            <span id="run-success" style="display: none">
-            <i class="fa fa-check with-margin-right"></i>
-            Succeed
-            </span>
-            <span id="run-failure" style="display: none">
-            <i class="fa fa-times with-margin-right"></i>
-            Failed
-            </span>
+        <div class="row embeded-charactors" id="job-logo">
+            <div class="col-md-6">
+                <span id="running">
+                <img class="with-margin-right" src="/static/img/snake-20x20.gif" alt="Job is running...">
+                Running...
+                </span>
+                <span id="run-success" style="display: none">
+                <i class="fa fa-check with-margin-right"></i>
+                Succeed
+                </span>
+                <span id="run-failure" style="display: none">
+                <i class="fa fa-times with-margin-right"></i>
+                Failed
+                </span>
+            </div>
+            <div class="col-md-6 text-right">
+                <i class="fa fa-clock-o"></i>
+                <span id="run-time" style="display: none">
+                </span>
+            </div>
         </div>
     </div>
     <div id="running-log">
         <div class="text-center">
             <img src="/static/img/broken-circle.gif" alt="Loading log...">
         </div>
-        <div class="well embeded-charactors" style="display: none"></div>
     </div>
 </div>
