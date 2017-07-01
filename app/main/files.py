@@ -24,7 +24,8 @@ CODE_SUFFIXES = dict(py='python',
                      js='javascript',
                      h='c',
                      conf='text',
-                     txt='text')
+                     txt='text',
+                     json='javascript')
 
 TEXT_SUFFIXES = dict(conf='text',
                      txt='text',

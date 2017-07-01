@@ -25,7 +25,7 @@ def run_mkm(path):
 
     # Remove old log file.
     logfile = '{}/out.log'.format(current_path)
-    to_be_removed = [logfile, 'run_success', 'run_failure']
+    to_be_removed = [logfile, 'run_success', 'run_failure', 'model_info.json']
     for filename in to_be_removed:
         if os.path.exists(filename):
             os.remove(filename)
@@ -62,8 +62,14 @@ def run_mkm(path):
         end = time.time()
         t = end - start
         h, m, s = convert_time(t)
+
+        # Write success stamp.
         with open('run_success', 'w') as f:
             f.write('duration="{:d} h {:d} min {:.2f} sec"\n'.format(h, m, s))
+
+        # Write model information for report generation
+        with open('model_info.json', 'w') as f:
+            json.dump(model.model_info, f)
 
     except Exception as e:
         msg = "{} exception is catched.".format(type(e).__name__)
