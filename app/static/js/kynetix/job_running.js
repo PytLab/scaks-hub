@@ -43,34 +43,34 @@
                 var contentLines = data.content_lines;
                 // Create code block.
                 $codeBlock = getCodeBlock('python', contentLines);
-                $('#running-panel-body div.panel-body').children('pre')
-                     .remove().end().append($codeBlock);
-                $('#running-panel-body img').css('display', 'none');
+                $('#running-log').children('pre').remove()
+                $('#running-log').append($codeBlock);
+                $('#running-log img').css('display', 'none');
 
                 // Check if stop query
                 if (data.stop) {
                     window.clearInterval(logQuery);
                     if (data.success) {
-                        $('#running-panel').removeClass('panel-warning')
-                            .addClass('panel-success');
+                        $('#running-status').removeClass('alert-warning')
+                            .addClass('alert-success');
                         $('#running').css('display', 'none');
                         $('#run-success').css('display', 'inline');
                     } else {
-                        $('#running-panel').removeClass('panel-warning')
-                            .addClass('panel-danger');
+                        $('#running-status').removeClass('alert-warning')
+                            .addClass('alert-danger');
                         $('#job-logo img').css('display', 'none');
                         $('#run-failure').css('display', 'inline');
                     }
                 }
             },
             error: function(XMLHttpRequest, textStatus, errorThrown) {
-                $alert = $('#running-panel-body .well');
+                $alert = $('#running-log');
                 $alert.html('<b>' + errorThrown + '</b>').css('display', 'block');
-                $('#running-panel-body div.panel-body').children('pre').remove();
+                $('#running-log').children('pre').remove();
                 $('#running').css('display', 'none');
                 $('#run-failure').css('display', 'inline');
-                $('#running-panel').removeClass('panel-warning')
-                    .addClass('panel-danger');
+                $('#running-status').removeClass('alert-warning')
+                    .addClass('alert-danger');
                 window.clearInterval(logQuery);
             }
         });
