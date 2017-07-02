@@ -21,7 +21,8 @@ def report():
     locs['links_paths'] = get_links_paths(full_path, path)
 
     model_info_file = '{}/model_info.json'.format(full_path)
-    if not os.path.exists(model_info_file):
+    traj_file = '{}/auto_ode_coverages.py'.format(full_path)
+    if not (os.path.exists(model_info_file) and os.path.exists(traj_file)):
         return render_template('/report/no_report.html', **locs)
 
     return render_template('/report/report.html', **locs)
