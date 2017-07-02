@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block content %}
+{% include "nav/navtabs.html" %}
+{% include "files/file_path.html" %}
+<div class="row">
+    <div class="panel panel-default">
+        <div class="panel-heading embeded-charactors"><i class="fa fa-list"></i>Report</div>
+        <div class="panel-body">
+        <div class="col-md-12 well embeded-charactors text-center">
+            <b>No model_info.json found in current directory</b>
+        </div>
+    </div>
+</div>
+{% endblock %}

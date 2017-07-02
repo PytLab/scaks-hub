@@ -22,4 +22,5 @@ FILE_HEADER = (
 from .files import *
 from .model import *
 from .job import *
+from .report import *
 

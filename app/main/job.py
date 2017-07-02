@@ -95,6 +95,7 @@ def running():
     # Job path.
     path = request.args.get('path', '').strip('/')
     full_path = '{}/{}'.format(os.getcwd(), path)
+    locs['path'] = path
     locs['full_path'] = full_path
     locs['links_paths'] = get_links_paths(full_path, path)
 

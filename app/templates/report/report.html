@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block content %}
+{% include "nav/navtabs.html" %}
+{% include "files/file_path.html" %}
+{% include "report/report_panel.html" %}
+{% endblock %}
+
+{% block script %}
+{{ super() }}
+<script src="{{ url_for('static', filename='js/kynetix/report.js') }}"></script>
+{% endblock %}
