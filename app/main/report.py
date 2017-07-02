@@ -49,8 +49,12 @@ def ode_traj():
         adsorbate_names = model_info['adsorbate_names']
         times = ode_info['times']
         coverages = list(zip(*ode_info['coverages']))
+
+        # Get empty site coverage.
+        empty_coverages = [1.0 - sum(cvg) for cvg in ode_info['coverages']]
+        coverages.append(empty_coverages)
         # Add to ode_info.
-        ode_data['adsorbate_names'] = adsorbate_names
+        ode_data['adsorbate_names'] = adsorbate_names + ['*_s']
         ode_data['coverages'] = coverages
         ode_data['times'] = times
 
