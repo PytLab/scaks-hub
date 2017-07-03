@@ -22,7 +22,18 @@ def report():
 
     model_info_file = '{}/model_info.json'.format(full_path)
     traj_file = '{}/auto_ode_coverages.py'.format(full_path)
+
+    # File existance.
     if not (os.path.exists(model_info_file) and os.path.exists(traj_file)):
+        return render_template('/report/no_report.html', **locs)
+
+    # Check file content
+    essential_info = ['adsorbate_names', 'rxn_expressions', 'gas_names',
+                      'TOFs', 'steady_state_coverages', 'reversibilities']
+    with open(model_info_file, 'r') as f:
+        model_info = json.load(f)
+    info_check = [info in model_info for info in essential_info]
+    if not all(info_check):
         return render_template('/report/no_report.html', **locs)
 
     return render_template('/report/report.html', **locs)
