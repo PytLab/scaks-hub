@@ -3,25 +3,89 @@
     <div class="panel panel-default">
         <div class="panel-heading embeded-charactors"><i class="fa fa-list"></i>Report</div>
         <div class="panel-body">
-            <div id="ode-traj" class="col-md-12" style="min-width: 400px; min-height: 400px"></div>
+            <div id="ode-traj" class="col-md-12" style="min-width: 400px; min-height: 400px">
+            </div>
+
+            <!-- Steady State Coverages -->
             <div class="col-md-12 text-center with-vertical-margins embeded-charactors">
                 <b>Steady State Coverages</b>
             </div>
-            <div id="ss-cvgs" class="col-md-12">
-                <table class="table table-hover">
+            <div id="load-ss-cvgs" class="text-center">
+                <img src="/static/img/broken-circle.gif" alt="Loading steady state coverages...">
+            </div>
+            <div id="ss-cvgs" class="col-md-12" style="display: none">
+                <table class="table table-striped">
                     <thead>
                         <tr>
-                            <td>#</td>
-                            <td>Adsorbate</td>
-                            <td>Coverage</td>
+                            <th>#</th>
+                            <th>Adsorbate</th>
+                            <th>Coverage (&theta;)</th>
                         </tr>
                     </thead>
                     <tbody>
+                        <!--
                         <tr>
                             <td>0</td>
                             <td><span class="monospaced">CO_s</span></td>
                             <td><span class="monospaced">0.82</span></td>
                         </tr>
+                        -->
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- TOFs -->
+            <div class="col-md-12 text-center with-vertical-margins embeded-charactors">
+                <b>Turnover Frequencies</b>
+            </div>
+            <div id="load-tofs" class="text-center">
+                <img src="/static/img/broken-circle.gif" alt="Loading TOFs...">
+            </div>
+            <div id="tofs" class="col-md-12" style="display: none">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Gas</th>
+                            <th>Rate (s<sup>-1</sup>)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!--
+                        <tr>
+                            <td>0</td>
+                            <td><span class="monospaced">CO_s</span></td>
+                            <td><span class="monospaced">0.82</span></td>
+                        </tr>
+                        -->
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Reversibilities -->
+            <div class="col-md-12 text-center with-vertical-margins embeded-charactors">
+                <b>Reversibilities</b>
+            </div>
+            <div id="load-reversibilities" class="text-center">
+                <img src="/static/img/broken-circle.gif" alt="Loading TOFs...">
+            </div>
+            <div id="reversibilities" class="col-md-12" style="display: none">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Reaction</th>
+                            <th>Reversibilities</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!--
+                        <tr>
+                            <td>0</td>
+                            <td><span class="monospaced">CO_s</span></td>
+                            <td><span class="monospaced">0.82</span></td>
+                        </tr>
+                        -->
                     </tbody>
                 </table>
             </div>

@@ -64,3 +64,15 @@ def ode_traj():
 
     return jsonify(ode_data)
 
+@main.route('/report/modelinfo/', methods=['POST'])
+def model_info():
+    full_path = request.form.get('full_path')
+    if full_path.endswith('/'):
+        full_path = full_path[: -1]
+
+    model_info_file = '{}/model_info.json'.format(full_path)
+    with open(model_info_file, 'r') as f:
+        model_info = json.load(f)
+
+    return jsonify(model_info)
+
