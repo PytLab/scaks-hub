@@ -3,10 +3,28 @@
     <div class="panel panel-default">
         <div class="panel-heading embeded-charactors"><i class="fa fa-list"></i>Report</div>
         <div class="panel-body">
-        <div id="no-ode-traj" class="col-md-12 well embeded-charactors text-center" style="display: none">
-            <b>No ODE integration trajectory</b>
-        </div>
-        <div id="ode-traj" class="col-md-12" style="min-width: 400px; min-height: 400px"></div>
+            <div id="ode-traj" class="col-md-12" style="min-width: 400px; min-height: 400px"></div>
+            <div class="col-md-12 text-center with-vertical-margins embeded-charactors">
+                <b>Steady State Coverages</b>
+            </div>
+            <div id="ss-cvgs" class="col-md-12">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <td>#</td>
+                            <td>Adsorbate</td>
+                            <td>Coverage</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>0</td>
+                            <td><span class="monospaced">CO_s</span></td>
+                            <td><span class="monospaced">0.82</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 </div>

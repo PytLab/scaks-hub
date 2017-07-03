@@ -7,7 +7,10 @@
         },
         dataType: 'json',
         success: function(data, textStatus) {
-            console.log(data);
+            if ($.isEmptyObject(data)) {
+                $('#ode-traj').remove();
+                return false;
+            }
             // Get data series
             var series = [];
             for (var i = 0; i < data.adsorbate_names.length; i++) {
@@ -62,5 +65,9 @@
             };
             var chart = new Highcharts.Chart('ode-traj', options);
         },
+        error: function() {
+            $('#ode-traj').remove();
+            return false;
+        }
     });
 })(jQuery);

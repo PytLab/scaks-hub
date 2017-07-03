@@ -38,26 +38,29 @@ def ode_traj():
     with open(model_info_file, 'r') as f:
         model_info = json.load(f)
 
-    ode_info = {}
     ode_data = {}
 
-    if not os.path.exists(traj_file):
-        ode_data['adsorbate_names'] = []
-        ode_data['coverages'] = []
-        ode_data['times'] = []
-    else:
-        exec(open(traj_file, 'r').read(), {}, ode_info)
-        adsorbate_names = model_info['adsorbate_names']
-        times = ode_info['times']
-        coverages = list(zip(*ode_info['coverages']))
+    ode_info = {}
+    exec(open(traj_file, 'r').read(), {}, ode_info)
 
-        # Get empty site coverage.
-        empty_coverages = [1.0 - sum(cvg) for cvg in ode_info['coverages']]
-        coverages.append(empty_coverages)
-        # Add to ode_info.
-        ode_data['adsorbate_names'] = adsorbate_names + ['*_s']
-        ode_data['coverages'] = coverages
-        ode_data['times'] = times
+    # For invalid ode trajectory file.
+    essential_info = ['times', 'coverages']
+    info_check = [info in ode_info for info in essential_info]
+    print(info_check)
+    if not all(info_check):
+        return jsonify({})
+
+    adsorbate_names = model_info['adsorbate_names']
+    times = ode_info['times']
+    coverages = list(zip(*ode_info['coverages']))
+
+    # Get empty site coverage.
+    empty_coverages = [1.0 - sum(cvg) for cvg in ode_info['coverages']]
+    coverages.append(empty_coverages)
+    # Add to ode_info.
+    ode_data['adsorbate_names'] = adsorbate_names + ['*_s']
+    ode_data['coverages'] = coverages
+    ode_data['times'] = times
 
     return jsonify(ode_data)
 
