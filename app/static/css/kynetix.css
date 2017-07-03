@@ -97,6 +97,11 @@ i {
     opacity: 0.3;
 }
 
+.dropdown-header {
+    margin-top: 3px;
+    font-size:14px;
+}
+
 /* Reaction definition modal */
 #rxn-panel-body .dropdown-menu > li.open-rxn-definition,
 #rxn-definition .modal-body .input-group {
