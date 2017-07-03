@@ -1,0 +1,3 @@
+[submodule "rxn-parser"]
+    path = app/static/js/rxn-parser
+    url = git@github.com:PytLab/rxn-parser.js.git
