@@ -1,0 +1,15 @@
+Flask>=0.12.2
+Flask-Bootstrap>=3.3.7.1
+Flask-Moment>=0.5.1
+Flask-Script>=2.0.5
+Flask-SQLAlchemy>=2.2
+gevent>=1.2.2
+matplotlib>=2.0.2
+mpi4py>=2.0.0
+mpmath>=0.19
+numpy>=1.13.0
+prettytable>=0.7.2
+scipy>=0.19.1
+SQLAlchemy>=1.1.10
+sympy>=1.0
+
