@@ -57,7 +57,6 @@ def ode_traj():
     # For invalid ode trajectory file.
     essential_info = ['times', 'coverages']
     info_check = [info in ode_info for info in essential_info]
-    print(info_check)
     if not all(info_check):
         return jsonify({})
 
