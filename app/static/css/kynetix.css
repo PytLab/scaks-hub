@@ -107,3 +107,8 @@ i {
 #model-form span, input, select, option {
     font-family: "Courier New", "Consolas";
 }
+
+/* Report table */
+.report-table {
+    margin-top: 50px;
+}

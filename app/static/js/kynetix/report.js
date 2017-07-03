@@ -146,4 +146,9 @@
             }
         }
     });
+
+    // Print report button
+    $('#print-report').on('click.kyn', function() {
+        window.print();
+    });
 })(jQuery);

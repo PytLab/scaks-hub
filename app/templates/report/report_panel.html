@@ -3,11 +3,19 @@
     <div class="panel panel-default">
         <div class="panel-heading embeded-charactors"><i class="fa fa-list"></i>Report</div>
         <div class="panel-body">
+            <div class="row">
+                <div class="col-md-12 text-right with-margin-bottom">
+                    <button id="print-report" type="button" class="btn btn-sm btn-default">
+                        <i class="fa fa-print"></i>
+                        <b>print report</b>
+                    </button>
+                </div>
+            </div>
             <div id="ode-traj" class="col-md-12" style="min-width: 400px; min-height: 400px">
             </div>
 
             <!-- Steady State Coverages -->
-            <div class="col-md-12 text-center with-vertical-margins embeded-charactors">
+            <div class="col-md-12 report-table text-center embeded-charactors">
                 <b>Steady State Coverages</b>
             </div>
             <div id="load-ss-cvgs" class="text-center">
@@ -35,7 +43,7 @@
             </div>
 
             <!-- TOFs -->
-            <div class="col-md-12 text-center with-vertical-margins embeded-charactors">
+            <div class="col-md-12 report-table text-center embeded-charactors">
                 <b>Turnover Frequencies</b>
             </div>
             <div id="load-tofs" class="text-center">
@@ -63,7 +71,7 @@
             </div>
 
             <!-- Reversibilities -->
-            <div class="col-md-12 text-center with-vertical-margins embeded-charactors">
+            <div class="col-md-12 report-table text-center embeded-charactors">
                 <b>Reversibilities</b>
             </div>
             <div id="load-reversibilities" class="text-center">
