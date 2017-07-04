@@ -57,6 +57,11 @@ i {
     #rxn-panel-body .text-right {
         text-align: left;
     }
+
+    /* Job running panel */
+    #running-status .text-right {
+        text-align: left;
+    }
 }
 
 /* Model styles */
