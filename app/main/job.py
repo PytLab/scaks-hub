@@ -77,7 +77,7 @@ def run_mkm(path):
 
         with open('run_failure', 'w') as f:
             end = time.time()
-            t = end - time
+            t = end - start
             h, m, s = convert_time(t)
             with open('run_success', 'w') as f:
                 f.write('duration="{:d} h {:d} min {:.2f} sec"\n'.format(h, m, s))
