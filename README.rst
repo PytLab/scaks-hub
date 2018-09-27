@@ -9,9 +9,16 @@ demo: http://123.206.225.154:5000/
 Install and run MiKiAC-Hub example locally
 ------------------------------------------
 
+Clone the repository:
+
 .. code:: shell
 
    git clone --recursive git@github.com:PytLab/mikiac-hub.git
+
+Run the mikiac-hub:
+
+.. code:: shell
+
    cd mikiac-hub/example
    ../mikiac-hub runserver
 
