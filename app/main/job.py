@@ -8,8 +8,8 @@ import multiprocessing
 import time
 
 from flask import render_template, request, jsonify
-from kynetix.models.micro_kinetic_model import MicroKineticModel
-from kynetix.utilities.format_utilities import convert_time
+from mikiac.models.micro_kinetic_model import MicroKineticModel
+from mikiac.utilities.format_utilities import convert_time
 
 from . import main
 from .files import get_links_paths
