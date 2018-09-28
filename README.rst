@@ -24,3 +24,8 @@ Run the mikiac-hub:
 
 Your browser will open automatically, if not, open your browser and
 visit http://localhost:5000
+
+|image0|
+
+.. |image0| image:: https://github.com/PytLab/mikiac-hub/blob/master/screenshot.png
+
