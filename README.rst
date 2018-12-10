@@ -15,6 +15,12 @@ Clone the repository:
 
    git clone --recursive git@github.com:PytLab/scaks-hub.git
 
+Install requirements
+
+.. code:: shell
+
+   pip install -r requirements.txt
+
 Run the scaks-hub:
 
 .. code:: shell

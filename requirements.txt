@@ -12,4 +12,5 @@ prettytable>=0.7.2
 scipy>=0.19.1
 SQLAlchemy>=1.1.10
 sympy>=1.0
+scaks
 
