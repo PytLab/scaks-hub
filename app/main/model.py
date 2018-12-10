@@ -6,7 +6,7 @@ import json
 import logging
 
 from flask import request, render_template, jsonify
-from mikiac.parsers.rxn_parser import RxnEquation
+from scaks.parsers.rxn_parser import RxnEquation
 
 from . import main
 from . import FILE_HEADER
