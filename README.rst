@@ -4,8 +4,6 @@ SCAKS-Hub
 A flask-powered web app for chemical kinetics analysis (using
 `SCAKS <https://github.com/PytLab/SCAKS>`__ as computing core)
 
-demo: http://123.206.225.154:5000/
-
 Install and run SCAKS-Hub example locally
 -----------------------------------------
 
